@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+  Question 45: Develop a Java Servlet application with session tracking.
+  Front page: enter a name to start a session handled by SessionServlet (HttpSession).
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q45 - Servlet Session Tracking</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #eef4ee; margin: 0; padding: 40px 16px; }
+        .box { max-width: 440px; margin: auto; background: #fff; padding: 24px; border-radius: 8px;
+               box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        h1 { font-size: 22px; color: #2e6b2e; margin-top: 0; }
+        input[type=text] { width: 100%; padding: 8px; box-sizing: border-box; margin: 6px 0 12px; }
+        button { padding: 8px 16px; background: #2e6b2e; color: #fff; border: 0; border-radius: 4px;
+                 cursor: pointer; }
+        ul { font-size: 14px; color: #444; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>Session Tracking Demo</h1>
+    <form action="session" method="post">
+        <label for="user">Your name:</label>
+        <input type="text" id="user" name="user" required>
+        <button type="submit">Start Session</button>
+    </form>
+    <p>Already started? <a href="session">View my session</a></p>
+    <ul>
+        <li>Each visit to the session page increments a visit counter.</li>
+        <li>The session id, creation time and last access time are shown.</li>
+        <li>Logout invalidates the session.</li>
+    </ul>
+</div>
+</body>
+</html>

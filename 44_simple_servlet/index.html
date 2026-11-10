@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--
+  Question 44: Develop a simple Java Servlet application.
+  Front page: a form that sends the user's name to HelloServlet (GET or POST).
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q44 - Simple Servlet</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f2f5f9; margin: 0; padding: 40px 16px; }
+        .box { max-width: 420px; margin: auto; background: #fff; padding: 24px; border-radius: 8px;
+               box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        h1 { font-size: 22px; color: #1a4d80; margin-top: 0; }
+        label { display: block; margin: 12px 0 4px; }
+        input[type=text] { width: 100%; padding: 8px; box-sizing: border-box; }
+        button { margin-top: 14px; padding: 8px 16px; background: #1a4d80; color: #fff; border: 0;
+                 border-radius: 4px; cursor: pointer; }
+        p.note { font-size: 13px; color: #555; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>Hello Servlet</h1>
+
+    <!-- Form 1: submitted with POST -> HelloServlet.doPost() -->
+    <form action="hello" method="post">
+        <label for="name1">Enter your name (POST):</label>
+        <input type="text" id="name1" name="name" required>
+        <button type="submit">Say Hello (POST)</button>
+    </form>
+
+    <!-- Form 2: submitted with GET -> HelloServlet.doGet() -->
+    <form action="hello" method="get">
+        <label for="name2">Enter your name (GET):</label>
+        <input type="text" id="name2" name="name" required>
+        <button type="submit">Say Hello (GET)</button>
+    </form>
+
+    <p class="note">Check the Tomcat console / logs to see the <code>init()</code>,
+        <code>service()</code> and <code>destroy()</code> life-cycle messages.</p>
+</div>
+</body>
+</html>

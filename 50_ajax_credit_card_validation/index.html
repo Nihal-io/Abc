@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!--
+  Question 50: Write a web application using Ajax to do the following:
+    A. check to make sure that the credit card number is composed of exactly 16 numerical digits
+    B. check to make sure that a Visa card number starts with a "4" and a MasterCard number
+       starts with a "5".
+  You can check for these things using regular expressions in combination with the PHP function
+  preg_match. A really good regex will allow for an optional "-" between every grouping of 4
+  numbers. For example, 4111111111111111 and 4111-1111-1111-1111 would both be valid credit card
+  numbers. If the user has not supplied a card number with the correct number of digits, show an
+  error message.
+
+  index.html sends the card type and number to validate.php with XMLHttpRequest (Ajax) and shows
+  the reply on the same page without reloading it.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q50 - Ajax Credit Card Validation</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f3f0f8; margin: 0; padding: 40px 16px; }
+        .box { max-width: 440px; margin: auto; background: #fff; padding: 24px; border-radius: 8px;
+               box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        h1 { font-size: 22px; color: #4b2c82; margin-top: 0; }
+        label { display: block; margin: 12px 0 4px; font-weight: bold; }
+        select, input[type=text] { width: 100%; padding: 8px; box-sizing: border-box; font-size: 15px; }
+        button { margin-top: 16px; padding: 9px 18px; background: #4b2c82; color: #fff; border: 0;
+                 border-radius: 4px; cursor: pointer; }
+        #result { margin-top: 16px; padding: 10px; border-radius: 4px; display: none; }
+        #result.valid   { display: block; background: #e3f6e3; border: 1px solid #5a5; color: #1d5e1d; }
+        #result.invalid { display: block; background: #fde8e8; border: 1px solid #d55; color: #8a1c1c; }
+        #result.wait    { display: block; background: #eee; border: 1px solid #bbb; color: #444; }
+        .hint { font-size: 13px; color: #666; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h1>Credit Card Validation (Ajax)</h1>
+
+    <form id="cardForm" action="validate.php" method="post">
+        <label for="type">Card type</label>
+        <select id="type" name="type">
+            <option value="visa">Visa</option>
+            <option value="mastercard">MasterCard</option>
+        </select>
+
+        <label for="number">Card number</label>
+        <input type="text" id="number" name="number" maxlength="19" autocomplete="off"
+               placeholder="4111-1111-1111-1111">
+        <p class="hint">16 digits, optionally written as 4 groups of 4 separated by "-".
+            Visa starts with 4, MasterCard starts with 5.</p>
+
+        <button type="submit">Validate</button>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    // Sends the form data to validate.php using XMLHttpRequest and shows the answer.
+    function validateCard() {
+        var type = document.getElementById("type").value;
+        var number = document.getElementById("number").value;
+        var result = document.getElementById("result");
+
+        result.className = "wait";
+        result.textContent = "Checking...";
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "validate.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {                 // request finished
+                if (xhr.status === 200) {
+                    // reply: first line VALID / INVALID, second line the message
+                    var lines = xhr.responseText.split("\n");
+                    var ok = lines[0] === "VALID";
+                    result.className = ok ? "valid" : "invalid";
+                    result.textContent = lines.slice(1).join("\n");
+                } else {
+                    result.className = "invalid";
+                    result.textContent = "Server error (" + xhr.status + "). Is validate.php running on a PHP server?";
+                }
+            }
+        };
+
+        xhr.send("type=" + encodeURIComponent(type) + "&number=" + encodeURIComponent(number));
+    }
+
+    // Stop the normal form submission (page reload) and use Ajax instead
+    document.getElementById("cardForm").onsubmit = function (event) {
+        event.preventDefault();
+        validateCard();
+    };
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+  Question 48: Develop a full-fledged web application with database access spreading over to 3 sessions.
+
+  Online Student Admission - home page.
+  The application form is split over 3 pages (/step1, /step2, /step3). The data entered on
+  each page is kept in one HttpSession and, on the final submit (/submit), inserted into
+  MySQL with JDBC. /admissions lists every admission stored in the database.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q48 - Online Student Admission</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="box">
+    <h1>Online Student Admission</h1>
+    <p>Welcome! The admission form is filled in <b>three steps</b>:</p>
+    <ol>
+        <li><b>Personal details</b> &ndash; name, gender, date of birth, email, phone, address</li>
+        <li><b>Academic details</b> &ndash; qualification, university, year of passing, percentage</li>
+        <li><b>Course selection &amp; review</b> &ndash; choose the course, check everything and submit</li>
+    </ol>
+    <p class="small">Your answers are remembered on the server (HttpSession) while you move
+        between the pages, and are saved to the database only when you press <i>Submit</i>.</p>
+
+    <a class="btn" href="step1">Apply Now &raquo;</a>
+    <a class="btn grey" href="admissions">View All Admissions</a>
+</div>
+</body>
+</html>
