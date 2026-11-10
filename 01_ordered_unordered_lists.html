@@ -1,0 +1,281 @@
+<!--
+  Question 1:
+  Write a HTML Program to demonstrate Ordered and Unordered list tags.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordered and Unordered Lists</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px 40px; line-height: 1.5; }
+        h1 { color: #1a4d8f; text-align: center; }
+        h2 { color: #fff; background: #1a4d8f; padding: 6px 10px; }
+        h3 { color: #1a4d8f; margin-bottom: 4px; }
+        .row { display: flex; flex-wrap: wrap; gap: 20px; }
+        .box { border: 1px solid #ccc; border-radius: 6px; padding: 8px 16px; min-width: 200px; }
+        code { background: #eee; padding: 1px 4px; }
+
+        /* list-style-type variants using CSS */
+        .ls-disc    { list-style-type: disc; }
+        .ls-circle  { list-style-type: circle; }
+        .ls-square  { list-style-type: square; }
+        .ls-none    { list-style-type: none; }
+        .ls-roman   { list-style-type: lower-roman; }
+        .ls-greek   { list-style-type: lower-greek; }
+        .ls-zero    { list-style-type: decimal-leading-zero; }
+        .ls-upalpha { list-style-type: upper-alpha; }
+
+        /* list-style-position */
+        .pos-inside  { list-style-position: inside;  background: #eef4fb; }
+        .pos-outside { list-style-position: outside; background: #eef4fb; }
+
+        /* custom marker using ::marker */
+        .custom-marker li::marker { content: "\2714  "; color: green; }
+
+        dt { font-weight: bold; color: #1a4d8f; }
+        dd { margin-left: 30px; margin-bottom: 6px; }
+    </style>
+</head>
+<body>
+    <h1>Demonstration of HTML List Tags</h1>
+
+    <!-- ================= ORDERED LISTS ================= -->
+    <h2>1. Ordered List &lt;ol&gt; &ndash; the <code>type</code> attribute</h2>
+    <div class="row">
+        <div class="box">
+            <h3>type="1" (default)</h3>
+            <ol type="1">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>type="A"</h3>
+            <ol type="A">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>type="a"</h3>
+            <ol type="a">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>type="I"</h3>
+            <ol type="I">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>type="i"</h3>
+            <ol type="i">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+            </ol>
+        </div>
+    </div>
+
+    <h2>2. Ordered List &ndash; <code>start</code>, <code>reversed</code> and <code>value</code></h2>
+    <div class="row">
+        <div class="box">
+            <h3>start="5"</h3>
+            <ol start="5">
+                <li>Five</li>
+                <li>Six</li>
+                <li>Seven</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>type="I" start="4"</h3>
+            <ol type="I" start="4">
+                <li>Fourth</li>
+                <li>Fifth</li>
+                <li>Sixth</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>reversed</h3>
+            <ol reversed>
+                <li>Third place</li>
+                <li>Second place</li>
+                <li>First place</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>reversed start="10"</h3>
+            <ol reversed start="10">
+                <li>Ten</li>
+                <li>Nine</li>
+                <li>Eight</li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>&lt;li value="..."&gt;</h3>
+            <ol>
+                <li>One</li>
+                <li value="10">Jumps to ten</li>
+                <li>Eleven</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ================= UNORDERED LISTS ================= -->
+    <h2>3. Unordered List &lt;ul&gt; &ndash; the <code>type</code> attribute</h2>
+    <p>(The <code>type</code> attribute on &lt;ul&gt; is old HTML; most browsers still honour it.
+       The CSS way is shown in section 5.)</p>
+    <div class="row">
+        <div class="box">
+            <h3>type="disc" (default)</h3>
+            <ul type="disc">
+                <li>Apple</li>
+                <li>Mango</li>
+                <li>Orange</li>
+            </ul>
+        </div>
+        <div class="box">
+            <h3>type="circle"</h3>
+            <ul type="circle">
+                <li>Apple</li>
+                <li>Mango</li>
+                <li>Orange</li>
+            </ul>
+        </div>
+        <div class="box">
+            <h3>type="square"</h3>
+            <ul type="square">
+                <li>Apple</li>
+                <li>Mango</li>
+                <li>Orange</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ================= NESTED LISTS ================= -->
+    <h2>4. Nested Lists</h2>
+    <div class="row">
+        <div class="box">
+            <h3>Ordered inside Ordered</h3>
+            <ol type="1">
+                <li>Semester I
+                    <ol type="a">
+                        <li>Programming in C</li>
+                        <li>Discrete Mathematics</li>
+                    </ol>
+                </li>
+                <li>Semester II
+                    <ol type="a">
+                        <li>Data Structures</li>
+                        <li>Web Technologies
+                            <ol type="i">
+                                <li>HTML</li>
+                                <li>CSS</li>
+                                <li>JavaScript</li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        <div class="box">
+            <h3>Unordered inside Unordered</h3>
+            <ul>
+                <li>Fruits
+                    <ul>
+                        <li>Apple</li>
+                        <li>Banana
+                            <ul>
+                                <li>Robusta</li>
+                                <li>Yelakki</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>Vegetables
+                    <ul>
+                        <li>Carrot</li>
+                        <li>Beans</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="box">
+            <h3>Mixed (ul inside ol and vice versa)</h3>
+            <ol>
+                <li>Front-end
+                    <ul type="square">
+                        <li>HTML</li>
+                        <li>CSS</li>
+                    </ul>
+                </li>
+                <li>Back-end
+                    <ul type="circle">
+                        <li>PHP</li>
+                        <li>Java Servlets
+                            <ol type="A">
+                                <li>doGet()</li>
+                                <li>doPost()</li>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ================= CSS list-style ================= -->
+    <h2>5. CSS <code>list-style</code> Variants</h2>
+    <div class="row">
+        <div class="box">
+            <h3>disc / circle / square / none</h3>
+            <ul class="ls-disc"><li>disc</li></ul>
+            <ul class="ls-circle"><li>circle</li></ul>
+            <ul class="ls-square"><li>square</li></ul>
+            <ul class="ls-none"><li>none (no marker)</li></ul>
+        </div>
+        <div class="box">
+            <h3>lower-roman / lower-greek</h3>
+            <ol class="ls-roman"><li>one</li><li>two</li><li>three</li></ol>
+            <ol class="ls-greek"><li>alpha</li><li>beta</li><li>gamma</li></ol>
+        </div>
+        <div class="box">
+            <h3>decimal-leading-zero / upper-alpha</h3>
+            <ol class="ls-zero"><li>one</li><li>two</li><li>three</li></ol>
+            <ol class="ls-upalpha"><li>one</li><li>two</li><li>three</li></ol>
+        </div>
+        <div class="box">
+            <h3>list-style-position</h3>
+            <ul class="pos-inside"><li>inside: marker is inside the content box</li></ul>
+            <ul class="pos-outside"><li>outside: marker hangs outside (default)</li></ul>
+        </div>
+        <div class="box">
+            <h3>Custom marker (::marker)</h3>
+            <ul class="custom-marker">
+                <li>Lab record completed</li>
+                <li>Viva prepared</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ================= DEFINITION LIST ================= -->
+    <h2>6. Definition / Description List &lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;</h2>
+    <dl>
+        <dt>HTML</dt>
+        <dd>HyperText Markup Language &ndash; used to structure web pages.</dd>
+        <dt>CSS</dt>
+        <dd>Cascading Style Sheets &ndash; used to style web pages.</dd>
+        <dt>JavaScript</dt>
+        <dd>A scripting language used to make web pages interactive.</dd>
+    </dl>
+</body>
+</html>

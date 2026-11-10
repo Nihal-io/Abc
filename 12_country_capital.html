@@ -1,0 +1,56 @@
+<!--
+  Question 12:
+  Write an HTML program that contains a selection box with a list of 5 countries. When the
+  user selects a country, its capital should be printed next in the list. Add CSS to
+  customize the properties of the font of the capital (color, bold and font size).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country and Capital</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #1a4d8f; }
+        select { padding: 6px; font-size: 16px; }
+
+        /* Font properties of the capital */
+        #capital {
+            color: #c0392b;       /* colour */
+            font-weight: bold;    /* bold */
+            font-size: 24px;      /* font size */
+            font-family: Georgia, serif;
+            margin-left: 15px;
+        }
+    </style>
+    <script>
+        var capitals = {
+            "India": "New Delhi",
+            "USA": "Washington, D.C.",
+            "Japan": "Tokyo",
+            "France": "Paris",
+            "Australia": "Canberra"
+        };
+
+        function showCapital() {
+            var country = document.getElementById("country").value;
+            var out = document.getElementById("capital");
+            out.innerHTML = (country === "") ? "" : "Capital: " + capitals[country];
+        }
+    </script>
+</head>
+<body>
+    <h1>Select a Country</h1>
+    <label for="country">Country:</label>
+    <select id="country" onchange="showCapital()">
+        <option value="">-- Select Country --</option>
+        <option value="India">India</option>
+        <option value="USA">USA</option>
+        <option value="Japan">Japan</option>
+        <option value="France">France</option>
+        <option value="Australia">Australia</option>
+    </select>
+    <span id="capital"></span>
+</body>
+</html>

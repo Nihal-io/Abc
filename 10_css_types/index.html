@@ -1,0 +1,91 @@
+<!--
+  Question 10:
+  Develop and demonstrate the usage of inline, internal and external style sheet using CSS.
+
+  Files: index.html (this page) and external.css (the external style sheet)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline, Internal and External CSS</title>
+
+    <!-- 1. EXTERNAL style sheet: rules kept in a separate .css file -->
+    <link rel="stylesheet" href="external.css">
+
+    <!-- 2. INTERNAL (embedded) style sheet: rules inside <style> in the <head> -->
+    <style>
+        h1 {
+            color: #1a4d8f;          /* overrides the green from external.css (comes later) */
+            text-transform: uppercase;
+        }
+
+        .internal-box {
+            background-color: #fdebd0;
+            border: 2px dashed #e67e22;
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
+        }
+
+        .internal-box h2 { color: #a04000; }
+
+        #internal-para {
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 12px; }
+        th { background: #1a4d8f; color: #fff; }
+    </style>
+</head>
+<body>
+    <h1>Types of CSS</h1>
+
+    <!-- ===== EXTERNAL ===== -->
+    <div class="external-box">
+        <h2>1. External Style Sheet</h2>
+        <p>This box is styled entirely by rules written in <b>external.css</b>, which is linked
+           using the <code>&lt;link&gt;</code> tag. One external file can style a whole website.</p>
+        <ul class="external-list">
+            <li>Written in a separate .css file</li>
+            <li>Linked with &lt;link rel="stylesheet" href="external.css"&gt;</li>
+            <li>Best for consistent look across many pages</li>
+        </ul>
+    </div>
+
+    <!-- ===== INTERNAL ===== -->
+    <div class="internal-box">
+        <h2>2. Internal (Embedded) Style Sheet</h2>
+        <p id="internal-para">This box is styled by rules written inside the
+           <code>&lt;style&gt;</code> tag in the &lt;head&gt; section of this page. These rules
+           apply only to this page.</p>
+    </div>
+
+    <!-- ===== INLINE ===== -->
+    <div style="background-color:#fadbd8; border:2px solid #c0392b; border-radius:8px; padding:12px 18px; margin-bottom:18px;">
+        <h2 style="color:#922b21; font-family:'Courier New', monospace;">3. Inline Style</h2>
+        <p style="font-size:17px; color:#333;">This box uses the <code>style</code> attribute
+           directly on each element. Inline styles affect only that one element.</p>
+        <p class="external-box" style="background-color:yellow; border-color:black;">
+           This paragraph has the class <b>external-box</b> AND an inline style &ndash; the
+           inline style wins (yellow background, black border).</p>
+    </div>
+
+    <h2>Priority (Cascading Order)</h2>
+    <p>When the same property is set in more than one place, the order of priority is:
+       <b style="color:#c0392b;">Inline</b> &gt; <b style="color:#a04000;">Internal / External</b>
+       (whichever comes later in the &lt;head&gt;) &gt; Browser default.
+       Example: <code>h1</code> is green in external.css but blue in the internal sheet,
+       and the heading appears blue.</p>
+
+    <table>
+        <tr><th>Type</th><th>Where written</th><th>Scope</th></tr>
+        <tr><td>Inline</td><td><code>style="..."</code> attribute of a tag</td><td>Single element</td></tr>
+        <tr><td>Internal</td><td><code>&lt;style&gt;</code> tag in &lt;head&gt;</td><td>Single page</td></tr>
+        <tr><td>External</td><td>Separate <code>.css</code> file linked with &lt;link&gt;</td><td>Many pages</td></tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,53 @@
+/* Question 11: stylesheet for the HTML5 College Website */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; color: #2c3e50; background: #f4f6f9; line-height: 1.6; }
+
+/* ---------- header & nav ---------- */
+header { background: #14396b; color: #fff; padding: 14px 30px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+header h1 { margin: 0; font-size: 26px; }
+header p { margin: 0; font-size: 14px; color: #f8c471; }
+nav { background: #1f5fa8; }
+nav ul { list-style: none; margin: 0; padding: 0 20px; display: flex; flex-wrap: wrap; }
+nav a { display: block; color: #fff; text-decoration: none; padding: 12px 18px; font-weight: 600; }
+nav a:hover, nav a.active { background: #f39c12; color: #14396b; }
+
+/* ---------- main layout: main content + aside ---------- */
+.layout { max-width: 1150px; margin: 24px auto; padding: 0 20px; display: grid; grid-template-columns: 3fr 1fr; gap: 24px; }
+@media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+
+main section, main article, aside { background: #fff; border-radius: 8px; padding: 16px 22px; margin-bottom: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+h2 { color: #14396b; margin-top: 0; }
+h3 { color: #1f5fa8; }
+figure { margin: 0; text-align: center; }
+figure img { max-width: 100%; border-radius: 6px; }
+figcaption { font-size: 14px; color: #7f8c8d; font-style: italic; }
+
+.hero { background: linear-gradient(120deg, #1f5fa8, #14396b); color: #fff; }
+.hero h2 { color: #fff; }
+.btn { display: inline-block; background: #f39c12; color: #14396b; padding: 8px 18px; border-radius: 4px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; font-size: 15px; }
+.btn:hover { background: #e67e22; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.grid article { margin: 0; border-top: 4px solid #f39c12; }
+
+aside h3 { margin-top: 0; }
+aside ul { padding-left: 18px; }
+mark { background: #f9e79f; }
+
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #d5dbe3; padding: 8px 10px; text-align: left; }
+th { background: #14396b; color: #fff; }
+tr:nth-child(even) td { background: #f2f6fb; }
+
+/* ---------- form ---------- */
+form fieldset { border: 1px solid #c9d3df; border-radius: 6px; margin-bottom: 14px; }
+form legend { font-weight: bold; color: #1f5fa8; padding: 0 6px; }
+.field { display: flex; flex-wrap: wrap; align-items: center; margin: 8px 0; }
+.field label { width: 170px; font-weight: 600; }
+.field input, .field select, .field textarea { flex: 1; min-width: 200px; padding: 7px; border: 1px solid #aab7c4; border-radius: 4px; font: inherit; }
+.field input[type=radio], .field input[type=checkbox], .field input[type=color], .field input[type=range] { flex: 0 0 auto; min-width: 0; }
+input:invalid:not(:placeholder-shown) { border-color: #e74c3c; }
+output { margin-left: 10px; font-weight: bold; }
+
+footer { background: #14396b; color: #d6e4f0; text-align: center; padding: 16px; }
+footer a { color: #f8c471; }

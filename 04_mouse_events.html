@@ -1,0 +1,152 @@
+<!--
+  Question 4:
+  Write a HTML program to demonstrate MOUSE EVENTS
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Events</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        h1 { color: #1a4d8f; }
+        .wrap { display: flex; flex-wrap: wrap; gap: 24px; }
+        .box {
+            width: 260px; height: 160px; border: 2px solid #1a4d8f; border-radius: 8px;
+            background: #eef4fb; display: flex; align-items: center; justify-content: center;
+            text-align: center; user-select: none; cursor: pointer; padding: 6px;
+        }
+        #enterBox { background: #fdf2e9; border-color: #d35400; }
+        #enterBox .inner { width: 120px; height: 60px; background: #f5cba7; border-radius: 6px;
+                           display: flex; align-items: center; justify-content: center; }
+        #coords { font-weight: bold; color: #c0392b; }
+        #log {
+            width: 360px; height: 330px; overflow-y: auto; border: 1px solid #999;
+            background: #111; color: #0f0; font-family: monospace; font-size: 13px; padding: 6px;
+        }
+        button { margin-top: 6px; padding: 5px 12px; }
+        table { border-collapse: collapse; margin-top: 18px; }
+        td, th { border: 1px solid #aaa; padding: 4px 10px; text-align: left; }
+    </style>
+</head>
+<body>
+    <h1>Demonstration of Mouse Events</h1>
+    <p>Interact with the boxes below using the mouse. Every event is written to the event log.</p>
+
+    <div class="wrap">
+        <div>
+            <!-- Box 1: all the classic mouse events as inline attributes -->
+            <div class="box" id="box1"
+                 onmouseover="over(this)"
+                 onmouseout="out(this)"
+                 onmousedown="down(this, event)"
+                 onmouseup="up(this, event)"
+                 onmousemove="move(event)"
+                 onclick="logEvent('onclick', 'single click')"
+                 ondblclick="dbl(this)"
+                 oncontextmenu="return rightClick(event)">
+                <div>
+                    Hover, click, double-click,<br>press/release, right-click<br>and move inside me
+                    <br><br>Mouse at: <span id="coords">(-, -)</span>
+                </div>
+            </div>
+            <br>
+            <!-- Box 2: mouseenter / mouseleave (do not bubble) vs mouseover / mouseout -->
+            <div class="box" id="enterBox"
+                 onmouseenter="enterLeave(this, 'onmouseenter')"
+                 onmouseleave="enterLeave(this, 'onmouseleave')">
+                <div class="inner">Inner child</div>
+            </div>
+            <p style="width:260px;font-size:13px;">
+                Box 2 uses <b>onmouseenter / onmouseleave</b>: moving onto the inner child
+                does <i>not</i> fire them again (unlike mouseover/mouseout).
+            </p>
+        </div>
+
+        <div>
+            <h3>Event Log</h3>
+            <div id="log"></div>
+            <button onclick="clearLog()">Clear Log</button>
+            <label><input type="checkbox" id="logMove"> log onmousemove too</label>
+        </div>
+    </div>
+
+    <table>
+        <tr><th>Event</th><th>Fires when</th></tr>
+        <tr><td>onmouseover</td><td>pointer moves onto the element (or a child)</td></tr>
+        <tr><td>onmouseout</td><td>pointer leaves the element (or a child)</td></tr>
+        <tr><td>onmouseenter</td><td>pointer enters the element (does not bubble)</td></tr>
+        <tr><td>onmouseleave</td><td>pointer leaves the element (does not bubble)</td></tr>
+        <tr><td>onmousedown</td><td>a mouse button is pressed</td></tr>
+        <tr><td>onmouseup</td><td>a mouse button is released</td></tr>
+        <tr><td>onmousemove</td><td>pointer moves inside the element</td></tr>
+        <tr><td>onclick</td><td>left button pressed and released</td></tr>
+        <tr><td>ondblclick</td><td>element is double-clicked</td></tr>
+        <tr><td>oncontextmenu</td><td>right button clicked (context menu)</td></tr>
+    </table>
+
+    <script>
+        var buttons = ["Left", "Middle", "Right"];
+
+        function logEvent(name, detail) {
+            var log = document.getElementById("log");
+            var time = new Date().toLocaleTimeString();
+            var line = document.createElement("div");
+            line.textContent = "[" + time + "] " + name + (detail ? " - " + detail : "");
+            log.appendChild(line);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function over(el) {
+            el.style.backgroundColor = "#d6eaf8";
+            logEvent("onmouseover", "pointer is over the box");
+        }
+
+        function out(el) {
+            el.style.backgroundColor = "#eef4fb";
+            el.style.borderColor = "#1a4d8f";
+            logEvent("onmouseout", "pointer left the box");
+        }
+
+        function down(el, e) {
+            el.style.borderColor = "#e74c3c";
+            logEvent("onmousedown", buttons[e.button] + " button pressed");
+        }
+
+        function up(el, e) {
+            el.style.borderColor = "#1a4d8f";
+            logEvent("onmouseup", buttons[e.button] + " button released");
+        }
+
+        function move(e) {
+            var rect = document.getElementById("box1").getBoundingClientRect();
+            var x = Math.round(e.clientX - rect.left);
+            var y = Math.round(e.clientY - rect.top);
+            document.getElementById("coords").innerHTML = "(" + x + ", " + y + ")";
+            if (document.getElementById("logMove").checked) {
+                logEvent("onmousemove", "x=" + x + ", y=" + y);
+            }
+        }
+
+        function dbl(el) {
+            el.style.backgroundColor = "#abebc6";
+            logEvent("ondblclick", "box double-clicked");
+        }
+
+        function rightClick(e) {
+            logEvent("oncontextmenu", "right-click at (" + e.clientX + ", " + e.clientY + "), menu blocked");
+            return false; // prevents the browser's context menu
+        }
+
+        function enterLeave(el, name) {
+            el.style.backgroundColor = (name === "onmouseenter") ? "#fad7a0" : "#fdf2e9";
+            logEvent(name, "outer orange box");
+        }
+
+        function clearLog() {
+            document.getElementById("log").innerHTML = "";
+        }
+    </script>
+</body>
+</html>

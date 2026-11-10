@@ -1,0 +1,99 @@
+<!--
+  Question 3:
+  Write a HTML program to demonstrate ONCLICK and ONLOAD
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONCLICK and ONLOAD Events</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        h1 { color: #1a4d8f; }
+        .panel { border: 1px solid #ccc; border-radius: 6px; padding: 12px 18px; margin-bottom: 18px; }
+        button { padding: 8px 16px; margin: 4px; cursor: pointer; }
+        #loadMsg { color: green; font-weight: bold; }
+        #colorBox { width: 160px; height: 80px; background: #ddd; line-height: 80px;
+                    text-align: center; border-radius: 6px; }
+        img { border: 1px solid #999; }
+    </style>
+    <script>
+        // ---------- ONLOAD handler for the whole page ----------
+        function pageLoaded() {
+            var now = new Date();
+            document.getElementById("loadMsg").innerHTML =
+                "Page loaded successfully at " + now.toLocaleTimeString();
+            alert("Welcome! The page has finished loading (onload event).");
+        }
+
+        // ---------- ONCLICK handlers ----------
+        var count = 0;
+        function increment() {
+            count++;
+            document.getElementById("counter").innerHTML = count;
+        }
+
+        function changeColor() {
+            var colors = ["#ff7675", "#74b9ff", "#55efc4", "#ffeaa7", "#a29bfe"];
+            var box = document.getElementById("colorBox");
+            var c = colors[Math.floor(Math.random() * colors.length)];
+            box.style.backgroundColor = c;
+            box.innerHTML = c;
+        }
+
+        function greet() {
+            var name = document.getElementById("userName").value.trim();
+            if (name === "") {
+                alert("Please enter your name.");
+            } else {
+                document.getElementById("greeting").innerHTML = "Hello, " + name + "!";
+            }
+        }
+
+        function imageLoaded() {
+            document.getElementById("imgMsg").innerHTML = "Image loaded (onload on &lt;img&gt;).";
+        }
+    </script>
+</head>
+
+<!-- onload on <body> fires after the whole page (incl. images) has loaded -->
+<body onload="pageLoaded()">
+    <h1>Demonstration of ONCLICK and ONLOAD Events</h1>
+
+    <div class="panel">
+        <h2>1. ONLOAD event</h2>
+        <p id="loadMsg">Waiting for page to load...</p>
+        <p>An <code>&lt;img&gt;</code> can also have its own onload event:</p>
+        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='60'%3E%3Crect width='120' height='60' fill='%231a4d8f'/%3E%3Ctext x='60' y='36' fill='white' font-size='16' text-anchor='middle'%3EImage%3C/text%3E%3C/svg%3E"
+             alt="Sample image" width="120" height="60" onload="imageLoaded()">
+        <p id="imgMsg"></p>
+    </div>
+
+    <div class="panel">
+        <h2>2. ONCLICK event</h2>
+
+        <h3>a) Simple alert (inline handler)</h3>
+        <button onclick="alert('You clicked the button!')">Click Me</button>
+
+        <h3>b) Click counter</h3>
+        <button onclick="increment()">Increment</button>
+        Count: <b id="counter">0</b>
+
+        <h3>c) Change colour of a box</h3>
+        <div id="colorBox">Click the button</div>
+        <button onclick="changeColor()">Change Colour</button>
+
+        <h3>d) Read input and display greeting</h3>
+        <input type="text" id="userName" placeholder="Enter your name">
+        <button onclick="greet()">Greet</button>
+        <p id="greeting"></p>
+
+        <h3>e) onclick on a non-button element</h3>
+        <p onclick="this.style.color='red'; this.innerHTML='You clicked this paragraph!';"
+           style="cursor:pointer; text-decoration:underline;">
+            Click this paragraph to change its text and colour.
+        </p>
+    </div>
+</body>
+</html>

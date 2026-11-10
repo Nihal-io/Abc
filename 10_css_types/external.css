@@ -1,0 +1,34 @@
+/*
+  Question 10: EXTERNAL style sheet.
+  Linked into index.html with:  <link rel="stylesheet" href="external.css">
+  These rules can be reused by any number of HTML pages.
+*/
+body {
+    font-family: Verdana, Arial, sans-serif;
+    background-color: #f4f8fb;
+    margin: 30px;
+}
+
+.external-box {
+    background-color: #d1f2eb;
+    border: 2px solid #16a085;
+    border-radius: 8px;
+    padding: 12px 18px;
+    margin-bottom: 18px;
+}
+
+.external-box h2 {
+    color: #0e6655;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+ul.external-list li {
+    color: #117864;
+    list-style-type: square;
+}
+
+/* this rule is overridden by the internal style sheet for <h1> colour (cascade demo) */
+h1 {
+    color: green;
+    text-align: center;
+}

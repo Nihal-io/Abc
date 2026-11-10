@@ -1,0 +1,29 @@
+<!--
+  Question 8:
+  Use frames to implement a restaurant webpage.
+
+  index.html is the FRAMESET page:
+    top frame    -> header.html  (restaurant name / logo)
+    left frame   -> nav.html     (menu of links, target="main")
+    right frame  -> home.html / menu.html / specials.html / contact.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Garden Restaurant</title>
+</head>
+<frameset rows="120,*" frameborder="0" border="0">
+    <frame src="header.html" name="top" scrolling="no" noresize>
+    <frameset cols="200,*" frameborder="1" border="3">
+        <frame src="nav.html" name="nav" scrolling="no">
+        <frame src="home.html" name="main" scrolling="auto">
+    </frameset>
+    <noframes>
+        <body>
+            <p>Your browser does not support frames. <a href="home.html">Open the home page</a>.</p>
+        </body>
+    </noframes>
+</frameset>
+</html>

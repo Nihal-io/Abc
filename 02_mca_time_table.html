@@ -1,0 +1,152 @@
+<!--
+  Question 2:
+  Write a HTML program to display Time Table of MCA Course using all attributes of table tag.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCA Time Table</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        caption { font-size: 22px; font-weight: bold; padding: 10px; color: #1a4d8f; }
+        th { color: #fff; }
+        td { text-align: center; }
+    </style>
+</head>
+<body>
+    <h1 align="center">XYZ College of Engineering &ndash; Department of MCA</h1>
+
+    <!--
+        Attributes of <table> used below:
+          border, cellpadding, cellspacing, width, height, align, bgcolor,
+          bordercolor, frame, rules, summary
+        Other table tags/attributes used:
+          <caption>, <colgroup>/<col span>, <thead>, <tbody>, <tfoot>,
+          <th scope>, rowspan, colspan, align, valign, bgcolor, width, height
+    -->
+    <table border="2"
+           cellpadding="10"
+           cellspacing="3"
+           width="90%"
+           height="400"
+           align="center"
+           bgcolor="#f5f9ff"
+           bordercolor="#1a4d8f"
+           frame="box"
+           rules="all"
+           summary="Weekly class time table for MCA First Year, Section A">
+
+        <caption>MCA I Year (Semester II) &ndash; Weekly Time Table</caption>
+
+        <colgroup>
+            <col span="1" bgcolor="#dbe7f7" style="background-color:#dbe7f7;">
+            <col span="2">
+            <col span="1" style="background-color:#fff4d6;">
+            <col span="3">
+            <col span="1">
+        </colgroup>
+
+        <thead bgcolor="#1a4d8f" style="background-color:#1a4d8f;">
+            <tr height="50">
+                <th scope="col" width="12%">Day / Time</th>
+                <th scope="col">9:00 &ndash; 10:00</th>
+                <th scope="col">10:00 &ndash; 11:00</th>
+                <th scope="col">11:00 &ndash; 11:15</th>
+                <th scope="col">11:15 &ndash; 12:15</th>
+                <th scope="col">12:15 &ndash; 1:15</th>
+                <th scope="col">1:15 &ndash; 2:00</th>
+                <th scope="col">2:00 &ndash; 4:00</th>
+            </tr>
+        </thead>
+
+        <tbody valign="middle">
+            <tr>
+                <th scope="row" bgcolor="#3c6fb4">Monday</th>
+                <td>Web Tech</td>
+                <td>Java</td>
+                <!-- the short break spans all 6 days -->
+                <td rowspan="6" bgcolor="#ffe8a3"><b>S<br>H<br>O<br>R<br>T<br><br>B<br>R<br>E<br>A<br>K</b></td>
+                <td>DBMS</td>
+                <td>Data Structures</td>
+                <!-- lunch spans all 6 days -->
+                <td rowspan="6" bgcolor="#c8f0c8"><b>L<br>U<br>N<br>C<br>H</b></td>
+                <td bgcolor="#ffd9d9">Web Tech Lab</td>
+            </tr>
+            <tr>
+                <th scope="row" bgcolor="#3c6fb4">Tuesday</th>
+                <td>Java</td>
+                <td>DBMS</td>
+                <td>Software Engg.</td>
+                <td>Web Tech</td>
+                <td bgcolor="#ffd9d9">Java Lab</td>
+            </tr>
+            <tr>
+                <th scope="row" bgcolor="#3c6fb4">Wednesday</th>
+                <td>Data Structures</td>
+                <td>Software Engg.</td>
+                <td>Java</td>
+                <td>Maths</td>
+                <td bgcolor="#ffd9d9">DBMS Lab</td>
+            </tr>
+            <tr>
+                <th scope="row" bgcolor="#3c6fb4">Thursday</th>
+                <!-- colspan: a two-hour seminar -->
+                <td colspan="2" bgcolor="#e6d9ff">Technical Seminar</td>
+                <td>DBMS</td>
+                <td>Web Tech</td>
+                <td>Library</td>
+            </tr>
+            <tr>
+                <th scope="row" bgcolor="#3c6fb4">Friday</th>
+                <td>Maths</td>
+                <td>Web Tech</td>
+                <td>Data Structures</td>
+                <td>Java</td>
+                <td>Sports</td>
+            </tr>
+            <tr>
+                <th scope="row" bgcolor="#3c6fb4">Saturday</th>
+                <td>Software Engg.</td>
+                <td>Maths</td>
+                <td colspan="2" align="center" bgcolor="#e6d9ff">Mentoring / Counselling</td>
+                <td>&mdash;</td>
+            </tr>
+        </tbody>
+
+        <tfoot bgcolor="#dbe7f7" style="background-color:#dbe7f7;">
+            <tr>
+                <td colspan="4" align="left"><b>Class Teacher:</b> Prof. A. Kumar</td>
+                <td colspan="4" align="right"><b>HOD, MCA</b></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <br>
+
+    <!-- Subject legend: a second small table using align="center" and cellspacing="0" -->
+    <table border="1" cellpadding="6" cellspacing="0" width="60%" align="center" bgcolor="#ffffff">
+        <caption>Subjects and Faculty</caption>
+        <thead>
+            <tr bgcolor="#1a4d8f">
+                <th scope="col">Code</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Faculty</th>
+                <th scope="col">Hours/Week</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>MCA201</td><td align="left">Web Technologies</td><td>Prof. A. Kumar</td><td>4</td></tr>
+            <tr><td>MCA202</td><td align="left">Java Programming</td><td>Dr. S. Rao</td><td>4</td></tr>
+            <tr><td>MCA203</td><td align="left">Database Management Systems</td><td>Dr. P. Shetty</td><td>3</td></tr>
+            <tr><td>MCA204</td><td align="left">Data Structures</td><td>Prof. R. Nair</td><td>3</td></tr>
+            <tr><td>MCA205</td><td align="left">Software Engineering</td><td>Prof. M. Iyer</td><td>3</td></tr>
+            <tr><td>MCA206</td><td align="left">Discrete Mathematics</td><td>Dr. K. Bhat</td><td>3</td></tr>
+        </tbody>
+        <tfoot>
+            <tr><th scope="row" colspan="3" align="right" bgcolor="#3c6fb4">Total</th><td><b>20</b></td></tr>
+        </tfoot>
+    </table>
+</body>
+</html>

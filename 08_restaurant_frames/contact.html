@@ -1,0 +1,35 @@
+<!--
+  Question 8 (main frame): contact details and table booking form.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Contact Us</h2>
+    <p><b>Address:</b> 12, MG Road, Bengaluru &ndash; 560001<br>
+       <b>Phone:</b> 080-98765432<br>
+       <b>Email:</b> hello@spicegarden.example</p>
+
+    <h2>Book a Table</h2>
+    <form onsubmit="alert('Thank you, ' + this.cname.value + '! Your table for ' + this.guests.value + ' is booked.'); return false;">
+        <label for="cname">Name:</label>
+        <input type="text" id="cname" name="cname" required><br>
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="10 digits" required><br>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required><br>
+        <label for="guests">Guests:</label>
+        <select id="guests" name="guests">
+            <option>2</option><option>4</option><option>6</option><option>8+</option>
+        </select><br>
+        <label for="note">Request:</label>
+        <textarea id="note" name="note" rows="3" cols="30"></textarea><br>
+        <label></label><button type="submit">Book Now</button>
+    </form>
+</body>
+</html>

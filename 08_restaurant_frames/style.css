@@ -1,0 +1,28 @@
+/* Question 8: shared stylesheet for the restaurant frames */
+body { font-family: Georgia, "Times New Roman", serif; margin: 0; padding: 18px 26px; color: #3e2723; background: #fffaf0; line-height: 1.5; }
+h2 { color: #b71c1c; border-bottom: 2px dashed #e0a96d; padding-bottom: 4px; }
+h3 { color: #6d4c41; margin-bottom: 4px; }
+table { border-collapse: collapse; width: 100%; max-width: 650px; }
+td, th { padding: 7px 10px; border-bottom: 1px dotted #c8a27a; text-align: left; }
+th { background: #b71c1c; color: #fff; }
+td.price { text-align: right; font-weight: bold; color: #b71c1c; }
+.veg { color: green; } .nonveg { color: #b71c1c; }
+.special { background: #fff3e0; border: 1px solid #e0a96d; border-radius: 6px; padding: 10px 16px; margin-bottom: 14px; }
+.special .price { font-size: 20px; color: #b71c1c; font-weight: bold; }
+.tag { background: #b71c1c; color: #fff; font-size: 12px; padding: 2px 8px; border-radius: 10px; }
+
+body.header { background: #b71c1c; color: #fff; text-align: center; padding: 12px; }
+body.header h1 { margin: 6px 0 0; font-size: 36px; letter-spacing: 2px; }
+body.header p { margin: 2px 0; font-style: italic; color: #ffe0b2; }
+
+body.nav { background: #3e2723; padding: 20px 12px; }
+body.nav a {
+    display: block; color: #ffe0b2; text-decoration: none; padding: 10px 12px; margin-bottom: 8px;
+    border: 1px solid #6d4c41; border-radius: 4px; font-size: 17px;
+}
+body.nav a:hover { background: #e0a96d; color: #3e2723; }
+body.nav p { color: #bcaaa4; font-size: 13px; margin-top: 30px; }
+
+form label { display: inline-block; width: 110px; }
+form input, form select, form textarea { margin-bottom: 8px; padding: 5px; font-family: inherit; }
+form button { padding: 7px 18px; background: #b71c1c; color: #fff; border: none; border-radius: 4px; cursor: pointer; }

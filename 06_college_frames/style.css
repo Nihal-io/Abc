@@ -1,0 +1,22 @@
+/* Question 6: common stylesheet for the frame pages of the college web site */
+body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 18px 26px; color: #2d3436; line-height: 1.5; }
+h1, h2 { color: #1a4d8f; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #b0c4de; padding: 7px 10px; text-align: left; }
+th { background: #1a4d8f; color: #fff; }
+tr:nth-child(even) td { background: #eef4fb; }
+.note { background: #fff8e1; border-left: 5px solid #f39c12; padding: 8px 12px; }
+
+/* header frame */
+body.header { background: #1a4d8f; color: #fff; text-align: center; padding: 10px; }
+body.header h1 { color: #fff; margin: 6px 0 2px; font-size: 30px; }
+body.header p { margin: 0; font-style: italic; }
+
+/* navigation frame */
+body.nav { background: #dbe7f7; padding: 18px 12px; }
+body.nav h3 { margin-top: 0; color: #1a4d8f; }
+body.nav a {
+    display: block; margin-bottom: 10px; padding: 10px 12px; background: #1a4d8f; color: #fff;
+    text-decoration: none; border-radius: 4px; font-weight: bold;
+}
+body.nav a:hover { background: #f39c12; }

@@ -1,0 +1,55 @@
+<!--
+  Question 5 (description page): UltraBook Pro 14
+  Opened when the user clicks the product image on the home page (index.html).
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UltraBook Pro 14 - ShopEasy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="images/logo.svg" alt="ShopEasy logo" width="48" height="48">
+            <h1>ShopEasy</h1>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="index.html#products">Products</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a class="back" href="index.html">&larr; Back to all products</a>
+        <div class="detail">
+            <img src="images/laptop.svg" alt="Laptop">
+            <div class="info">
+                <h2>UltraBook Pro 14</h2>
+                <span class="price">&#8377; 54,999</span><span class="old-price">&#8377; 69,999</span>
+                <h3>Description</h3>
+                <p>A thin and light 14-inch laptop built for students and professionals. Powerful enough for programming, video calls and everyday multitasking, with all-day battery life.</p>
+                <h3>Specifications</h3>
+                <table>
+                    <tr><th>Processor</th><td>Intel Core i5, 12th Gen</td></tr>
+                    <tr><th>RAM</th><td>16 GB DDR4</td></tr>
+                    <tr><th>Storage</th><td>512 GB NVMe SSD</td></tr>
+                    <tr><th>Display</th><td>14" Full HD IPS</td></tr>
+                    <tr><th>Battery</th><td>Up to 10 hours</td></tr>
+                    <tr><th>Weight</th><td>1.4 kg</td></tr>
+                    <tr><th>Warranty</th><td>1 Year</td></tr>
+                </table>
+                <button class="btn buy" onclick="alert('UltraBook Pro 14 has been added to your cart.')">Add to Cart</button>
+                <a class="btn" href="index.html">Continue Shopping</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 ShopEasy Pvt. Ltd. | Free delivery on orders above &#8377; 499
+    </footer>
+</body>
+</html>

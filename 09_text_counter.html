@@ -1,0 +1,50 @@
+<!--
+  Question 9:
+  Write a HTML page that has one input, which can take multi-line text and a submit button.
+  Once the user clicks the submit button, it should show the number of characters, words
+  and lines in the text entered using an alert message. Words are separated with white
+  spaces and lines are separated with new line character.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character, Word and Line Counter</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #1a4d8f; }
+        textarea { width: 500px; max-width: 95%; padding: 8px; font-size: 15px; }
+        input[type=submit] { margin-top: 10px; padding: 8px 20px; font-size: 15px; cursor: pointer; }
+    </style>
+    <script>
+        function countText() {
+            var text = document.getElementById("txt").value;
+
+            // Characters: every character typed (including spaces and new lines)
+            var chars = text.length;
+
+            // Words: split on one or more white-space characters, ignore empty pieces
+            var trimmed = text.trim();
+            var words = (trimmed === "") ? 0 : trimmed.split(/\s+/).length;
+
+            // Lines: separated by the new line character
+            var lines = (text === "") ? 0 : text.split("\n").length;
+
+            alert("Number of Characters : " + chars +
+                  "\nNumber of Words      : " + words +
+                  "\nNumber of Lines      : " + lines);
+
+            return false; // stop the form from actually submitting / reloading
+        }
+    </script>
+</head>
+<body>
+    <h1>Text Counter</h1>
+    <form onsubmit="return countText()">
+        <label for="txt">Enter your text:</label><br>
+        <textarea id="txt" name="txt" rows="10" placeholder="Type multi-line text here..."></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

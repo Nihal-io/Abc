@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="180" viewBox="0 0 240 180">
+  <rect width="240" height="180" fill="#f4ecf7"/>
+  <rect x="102" y="10" width="36" height="140" rx="8" fill="#6c5ce7"/>
+  <circle cx="120" cy="80" r="36" fill="#2d3436"/>
+  <circle cx="120" cy="80" r="30" fill="#ffffff"/>
+  <line x1="120" y1="80" x2="120" y2="58" stroke="#2d3436" stroke-width="3" stroke-linecap="round"/>
+  <line x1="120" y1="80" x2="136" y2="88" stroke="#d63031" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="120" cy="80" r="3" fill="#2d3436"/>
+  <text x="120" y="168" font-family="Arial" font-size="14" text-anchor="middle" fill="#2d3436">Smart Watch</text>
+</svg>

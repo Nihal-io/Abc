@@ -1,0 +1,31 @@
+<!--
+  Question 6:
+  Design the following web pages of college web site and link these pages to home page
+  using frames in HTML - Home, About Us, Courses Offered, Admissions.
+
+  index.html is the FRAMESET page:
+    top frame    -> header.html  (college name)
+    left frame   -> nav.html     (links with target="content")
+    right frame  -> home.html / about.html / courses.html / admissions.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABC College - Frames</title>
+</head>
+<frameset rows="110,*" border="2" frameborder="1" bordercolor="#1a4d8f">
+    <frame src="header.html" name="header" scrolling="no" noresize>
+    <frameset cols="220,*">
+        <frame src="nav.html" name="nav" scrolling="auto">
+        <frame src="home.html" name="content" scrolling="auto">
+    </frameset>
+    <noframes>
+        <body>
+            <p>Your browser does not support frames.
+               <a href="home.html">Click here to open the Home page</a>.</p>
+        </body>
+    </noframes>
+</frameset>
+</html>

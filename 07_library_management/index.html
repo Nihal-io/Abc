@@ -1,0 +1,60 @@
+<!--
+  Question 7:
+  Design the following static web pages required for Library Management System web site and
+  link these pages to home page using hyperlinks in HTML. Home, About Us, List of Books.
+
+  Pages: index.html (Home), about.html (About Us), books.html (List of Books)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Central Library &ndash; Library Management System</h1>
+        <p>"A library is the delivery room for the birth of ideas."</p>
+    </header>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="books.html">List of Books</a>
+    </nav>
+
+    <div class="content">
+        <h2>Welcome</h2>
+        <p>Welcome to the online portal of the Central Library. Here you can learn about the
+           library, browse the list of available books and check whether a book is available
+           for issue.</p>
+
+        <div class="cards">
+            <div class="card">
+                <h3>About the Library</h3>
+                <p>Know our history, timings, rules and staff.</p>
+                <a href="about.html">Read more &raquo;</a>
+            </div>
+            <div class="card">
+                <h3>List of Books</h3>
+                <p>Browse books by title, author and subject with availability.</p>
+                <a href="books.html">View books &raquo;</a>
+            </div>
+            <div class="card">
+                <h3>Library Timings</h3>
+                <p>Mon &ndash; Sat: 8:30 AM to 8:00 PM<br>Sunday: Closed</p>
+            </div>
+        </div>
+
+        <h2>Announcements</h2>
+        <ul>
+            <li>New arrivals in Computer Science section &ndash; 150 books added.</li>
+            <li>Return all borrowed books before the semester exams.</li>
+            <li>Digital library access is now available from the campus Wi-Fi.</li>
+        </ul>
+    </div>
+
+    <footer>&copy; 2026 Central Library, ABC College | <a href="about.html" style="color:#d7ccc8;">Contact Us</a></footer>
+</body>
+</html>

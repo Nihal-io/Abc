@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="260" viewBox="0 0 600 260">
+  <rect width="600" height="260" fill="#cfe8ff"/>
+  <circle cx="520" cy="55" r="28" fill="#ffd166"/>
+  <rect y="210" width="600" height="50" fill="#7cc576"/>
+  <rect x="150" y="90" width="300" height="120" fill="#e9e3d5" stroke="#8d6e63" stroke-width="2"/>
+  <path d="M140 92 L300 30 L460 92 Z" fill="#b5523b"/>
+  <rect x="275" y="150" width="50" height="60" fill="#6d4c41"/>
+  <g fill="#5dade2">
+    <rect x="175" y="110" width="35" height="30"/><rect x="230" y="110" width="35" height="30"/>
+    <rect x="335" y="110" width="35" height="30"/><rect x="390" y="110" width="35" height="30"/>
+    <rect x="175" y="160" width="35" height="30"/><rect x="390" y="160" width="35" height="30"/>
+  </g>
+  <rect x="294" y="40" width="12" height="20" fill="#fff"/>
+  <text x="300" y="250" font-family="Arial" font-size="16" text-anchor="middle" fill="#14396b">Main Campus Building</text>
+</svg>

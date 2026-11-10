@@ -1,0 +1,70 @@
+<!--
+  Question 5:
+  Design a Home page of online Shopping web site that contains different products with
+  images. Create image of the products as hyperlinks to display the Description of products.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - Online Shopping</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <img src="images/logo.svg" alt="ShopEasy logo" width="48" height="48">
+            <h1>ShopEasy</h1>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#products">Products</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="banner">
+        <h2>Festival Sale &ndash; Up to 40% OFF on Electronics!</h2>
+        <p>Click on any product image to view its full description.</p>
+    </div>
+
+    <div class="container">
+        <h2 id="products">Our Products</h2>
+        <div class="products">
+            <div class="card">
+                <!-- product image is a hyperlink to its description page -->
+                <a href="laptop.html"><img src="images/laptop.svg" alt="Laptop"></a>
+                <h3>UltraBook Pro 14</h3>
+                <span class="price">&#8377; 54,999</span><span class="old-price">&#8377; 69,999</span><br>
+                <a class="btn" href="laptop.html">View Details</a>
+            </div>
+
+            <div class="card">
+                <a href="mobile.html"><img src="images/mobile.svg" alt="Smartphone"></a>
+                <h3>Galaxy Nova 5G</h3>
+                <span class="price">&#8377; 18,499</span><span class="old-price">&#8377; 22,999</span><br>
+                <a class="btn" href="mobile.html">View Details</a>
+            </div>
+
+            <div class="card">
+                <a href="headphones.html"><img src="images/headphones.svg" alt="Headphones"></a>
+                <h3>BassBeat Wireless</h3>
+                <span class="price">&#8377; 2,999</span><span class="old-price">&#8377; 4,999</span><br>
+                <a class="btn" href="headphones.html">View Details</a>
+            </div>
+
+            <div class="card">
+                <a href="watch.html"><img src="images/watch.svg" alt="Smart Watch"></a>
+                <h3>FitTime Smart Watch</h3>
+                <span class="price">&#8377; 3,499</span><span class="old-price">&#8377; 5,499</span><br>
+                <a class="btn" href="watch.html">View Details</a>
+            </div>
+        </div>
+    </div>
+
+    <footer id="contact">
+        &copy; 2026 ShopEasy Pvt. Ltd. | Email: support@shopeasy.example | Phone: 1800-123-456
+    </footer>
+</body>
+</html>

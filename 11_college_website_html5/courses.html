@@ -1,0 +1,92 @@
+<!--
+  Question 11:
+  Develop College Website using HTML5 and CSS
+  (Courses page)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ABC Institute of Technology - official college website">
+    <title>Courses | ABC Institute of Technology</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="images/logo.svg" alt="College logo" width="64" height="64">
+        <hgroup>
+            <h1>ABC Institute of Technology</h1>
+            <p>Affiliated to XYZ University &bull; Approved by AICTE &bull; NAAC A+</p>
+        </hgroup>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="courses.html" class="active">Courses</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="layout">
+        <main>
+            <section>
+                <h2>Courses Offered</h2>
+                <table>
+                    <thead>
+                        <tr><th>Level</th><th>Programme</th><th>Duration</th><th>Seats</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td rowspan="3">UG</td><td>B.E. Computer Science &amp; Engineering</td><td>4 Years</td><td>240</td></tr>
+                        <tr><td>B.E. Information Science</td><td>4 Years</td><td>120</td></tr>
+                        <tr><td>BCA</td><td>3 Years</td><td>120</td></tr>
+                        <tr><td rowspan="3">PG</td><td>MCA</td><td>2 Years</td><td>180</td></tr>
+                        <tr><td>MBA</td><td>2 Years</td><td>120</td></tr>
+                        <tr><td>M.Tech Data Science</td><td>2 Years</td><td>18</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h2>Department Highlights</h2>
+                <div class="grid">
+                    <article>
+                        <h3>MCA</h3>
+                        <p>Full-stack development, cloud computing and machine learning electives.</p>
+                    </article>
+                    <article>
+                        <h3>Computer Science</h3>
+                        <p>Centres of excellence in AI, IoT and cyber security.</p>
+                    </article>
+                    <article>
+                        <h3>MBA</h3>
+                        <p>Specialisations in Finance, Marketing, HR and Business Analytics.</p>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <aside>
+            <h3>Notice Board</h3>
+            <ul>
+                <li><time datetime="2026-11-20">20 Nov 2026</time> &ndash; Internal assessment II begins</li>
+                <li><time datetime="2026-12-15">15 Dec 2026</time> &ndash; TechNova tech fest</li>
+                <li><time datetime="2027-01-05">05 Jan 2027</time> &ndash; Placement drive by TCS</li>
+            </ul>
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="courses.html">Courses Offered</a></li>
+                <li><a href="contact.html">Admission Enquiry</a></li>
+                <li><a href="about.html">Our Faculty</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; <time datetime="2026">2026</time> ABC Institute of Technology, Bengaluru &bull;
+           <a href="contact.html">Contact</a> &bull; Phone: 080-23456789</p>
+    </footer>
+</body>
+</html>

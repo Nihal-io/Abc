@@ -1,0 +1,103 @@
+<!--
+  Question 11:
+  Develop College Website using HTML5 and CSS
+  (Home page)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ABC Institute of Technology - official college website">
+    <title>Home | ABC Institute of Technology</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <img src="images/logo.svg" alt="College logo" width="64" height="64">
+        <hgroup>
+            <h1>ABC Institute of Technology</h1>
+            <p>Affiliated to XYZ University &bull; Approved by AICTE &bull; NAAC A+</p>
+        </hgroup>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <div class="layout">
+        <main>
+            <section class="hero">
+                <h2>Welcome to ABC Institute of Technology</h2>
+                <p>Shaping future engineers, technologists and managers since 1998. Admissions for
+                   <mark>2026-27</mark> are now open for UG and PG programmes.</p>
+                <a class="btn" href="contact.html">Enquire Now</a>
+            </section>
+
+            <section>
+                <figure>
+                    <img src="images/campus.svg" alt="Main campus building" width="600" height="260">
+                    <figcaption>Our 40-acre green campus</figcaption>
+                </figure>
+            </section>
+
+            <section>
+                <h2>Why Choose Us?</h2>
+                <div class="grid">
+                    <article>
+                        <h3>Expert Faculty</h3>
+                        <p>Over 150 qualified faculty members, 60% with Ph.D.</p>
+                    </article>
+                    <article>
+                        <h3>Placements</h3>
+                        <p>92% placement record with 200+ recruiting companies.</p>
+                    </article>
+                    <article>
+                        <h3>Infrastructure</h3>
+                        <p>Smart classrooms, modern labs, Wi-Fi campus and hostels.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section>
+                <h2>Latest News</h2>
+                <article>
+                    <h3>Students win national hackathon</h3>
+                    <p><time datetime="2026-10-28">28 October 2026</time> &ndash; A team of MCA students won
+                       first prize at the Smart India Hackathon.</p>
+                </article>
+                <article>
+                    <h3>New AI &amp; Data Science lab inaugurated</h3>
+                    <p><time datetime="2026-09-15">15 September 2026</time> &ndash; A GPU-enabled lab was
+                       opened for research and student projects.</p>
+                </article>
+            </section>
+        </main>
+
+        <aside>
+            <h3>Notice Board</h3>
+            <ul>
+                <li><time datetime="2026-11-20">20 Nov 2026</time> &ndash; Internal assessment II begins</li>
+                <li><time datetime="2026-12-15">15 Dec 2026</time> &ndash; TechNova tech fest</li>
+                <li><time datetime="2027-01-05">05 Jan 2027</time> &ndash; Placement drive by TCS</li>
+            </ul>
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="courses.html">Courses Offered</a></li>
+                <li><a href="contact.html">Admission Enquiry</a></li>
+                <li><a href="about.html">Our Faculty</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <footer>
+        <p>&copy; <time datetime="2026">2026</time> ABC Institute of Technology, Bengaluru &bull;
+           <a href="contact.html">Contact</a> &bull; Phone: 080-23456789</p>
+    </footer>
+</body>
+</html>
