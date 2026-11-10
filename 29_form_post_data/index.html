@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+  Question 29: Write a Java script that can handle form data submitted via post.
+  (Client side: JavaScript reads the form with FormData on submit and displays it.
+   Server side: server.js (Node.js, built-in http module) receives the POST body.)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q29 - Handling Form Data Submitted via POST</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #eef2f5; margin: 20px; }
+  .card { background: #fff; max-width: 560px; padding: 18px 24px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,.15); margin-bottom: 16px; }
+  label { display: block; margin-top: 10px; font-weight: bold; }
+  input[type=text], input[type=email], input[type=number], select, textarea { width: 100%; padding: 6px; box-sizing: border-box; }
+  .inline label { display: inline; font-weight: normal; margin-right: 10px; }
+  button { margin-top: 14px; padding: 8px 14px; cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; }
+  th, td { border: 1px solid #bbb; padding: 6px 8px; text-align: left; }
+  th { background: #2c3e50; color: #fff; }
+  .note { font-size: 13px; color: #555; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Student Feedback Form (method="post")</h2>
+  <form id="studentForm" action="/submit" method="post">
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="age">Age</label>
+    <input type="number" id="age" name="age" min="15" max="60">
+
+    <label>Gender</label>
+    <div class="inline">
+      <input type="radio" id="male" name="gender" value="Male" checked><label for="male">Male</label>
+      <input type="radio" id="female" name="gender" value="Female"><label for="female">Female</label>
+    </div>
+
+    <label for="course">Course</label>
+    <select id="course" name="course">
+      <option>MCA</option><option>MBA</option><option>B.Tech</option>
+    </select>
+
+    <label>Hobbies</label>
+    <div class="inline">
+      <input type="checkbox" id="h1" name="hobbies" value="Reading"><label for="h1">Reading</label>
+      <input type="checkbox" id="h2" name="hobbies" value="Coding"><label for="h2">Coding</label>
+      <input type="checkbox" id="h3" name="hobbies" value="Sports"><label for="h3">Sports</label>
+    </div>
+
+    <label for="comments">Comments</label>
+    <textarea id="comments" name="comments" rows="3"></textarea>
+
+    <button type="submit">Submit (handled by JavaScript)</button>
+    <button type="submit" data-direct="yes">Submit directly to server (normal POST)</button>
+    <button type="reset">Reset</button>
+  </form>
+  <p class="note">The first button lets JavaScript read the data with <code>FormData</code> and show it below
+  (and, if the page is served by <code>server.js</code>, also POSTs it in the background).
+  The second button performs a normal browser POST to <code>/submit</code> (needs <code>server.js</code> running).</p>
+</div>
+
+<div class="card" id="clientCard" style="display:none">
+  <h3>Data read on the client (FormData)</h3>
+  <table id="clientTable"></table>
+  <p class="note" id="encoded"></p>
+</div>
+
+<div class="card" id="serverCard" style="display:none">
+  <h3>Response from server (POST /submit)</h3>
+  <div id="serverOut"></div>
+</div>
+
+<script>
+var form = document.getElementById("studentForm");
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+form.addEventListener("submit", function (event) {
+  // "Submit directly" button -> let the browser do a real POST to the server
+  if (event.submitter && event.submitter.getAttribute("data-direct") === "yes") {
+    return;
+  }
+  event.preventDefault();               // stop the page from reloading
+
+  var data = new FormData(form);        // collect all named fields
+
+  // Group values by field name (checkboxes may give several values)
+  var fields = {};
+  data.forEach(function (value, key) {
+    if (!fields[key]) fields[key] = [];
+    fields[key].push(value);
+  });
+  if (!fields.hobbies) fields.hobbies = ["(none)"];
+
+  var html = "<tr><th>Field</th><th>Value</th></tr>";
+  for (var key in fields) {
+    html += "<tr><td>" + esc(key) + "</td><td>" + esc(fields[key].join(", ")) + "</td></tr>";
+  }
+  document.getElementById("clientTable").innerHTML = html;
+
+  // The exact body a POST would send (application/x-www-form-urlencoded)
+  var body = new URLSearchParams(data).toString();
+  document.getElementById("encoded").innerHTML = "<b>Request body (urlencoded):</b> " + esc(body);
+  document.getElementById("clientCard").style.display = "block";
+
+  // If served over http(s) by server.js, also send the data via POST using fetch
+  if (location.protocol.indexOf("http") === 0) {
+    fetch(form.action, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
+      body: body
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        document.getElementById("serverOut").innerHTML = "<pre>" + esc(JSON.stringify(json, null, 2)) + "</pre>";
+        document.getElementById("serverCard").style.display = "block";
+      })
+      .catch(function (err) {
+        document.getElementById("serverOut").innerHTML = "Server not reachable: " + esc(err.message);
+        document.getElementById("serverCard").style.display = "block";
+      });
+  }
+});
+</script>
+</body>
+</html>

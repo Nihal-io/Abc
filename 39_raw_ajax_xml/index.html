@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--
+  Question 39: Write a program on "raw" AJAX implementation using the XMLHttpRequest object to
+  fetch and display data from an XML file.
+  index.html - creates an XMLHttpRequest by hand, watches onreadystatechange, checks
+  readyState == 4 and status == 200, then parses responseXML into an HTML table.
+  Serve with: python3 -m http.server   (XHR is blocked on file://)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q39 - Raw AJAX with XMLHttpRequest</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f3f5f8; margin: 20px; }
+  h1 { font-size: 22px; color: #2c3e50; }
+  button { padding: 7px 14px; margin-right: 6px; cursor: pointer; }
+  table { border-collapse: collapse; margin-top: 14px; background: #fff; min-width: 600px; }
+  th, td { border: 1px solid #aaa; padding: 6px 10px; text-align: left; }
+  th { background: #2c3e50; color: #fff; }
+  tr:nth-child(even) td { background: #f2f6fa; }
+  td.num { text-align: right; }
+  #log { background: #fff; border: 1px solid #ccc; padding: 8px; margin-top: 14px; font-family: monospace;
+         font-size: 13px; max-width: 600px; white-space: pre-line; }
+  .error { color: #c0392b; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Raw AJAX: loading employees.xml with XMLHttpRequest</h1>
+<button onclick="loadXML('employees.xml')">Load Employees</button>
+<button onclick="loadXML('missing.xml')">Load a missing file (error demo)</button>
+<button onclick="clearAll()">Clear</button>
+
+<div id="output"></div>
+<div id="log">readyState log will appear here.</div>
+
+<script>
+var states = ["0 UNSENT", "1 OPENED", "2 HEADERS_RECEIVED", "3 LOADING", "4 DONE"];
+
+function log(msg) {
+  var box = document.getElementById("log");
+  box.textContent += msg + "\n";
+}
+
+// Create the XHR object (with fallback for very old Internet Explorer)
+function createXHR() {
+  if (window.XMLHttpRequest) return new XMLHttpRequest();
+  return new ActiveXObject("Microsoft.XMLHTTP");
+}
+
+function loadXML(url) {
+  document.getElementById("log").textContent = "";
+  document.getElementById("output").innerHTML = "";
+
+  var xhr = createXHR();
+
+  xhr.onreadystatechange = function () {
+    log("readyState = " + states[xhr.readyState]);
+
+    if (xhr.readyState === 4) {               // request finished
+      log("status = " + xhr.status + " " + xhr.statusText);
+      if (xhr.status === 200) {               // OK
+        var xml = xhr.responseXML;            // already parsed XML DOM
+        if (!xml || xml.getElementsByTagName("parsererror").length) {
+          xml = new DOMParser().parseFromString(xhr.responseText, "application/xml");
+        }
+        displayTable(xml);
+      } else {
+        document.getElementById("output").innerHTML =
+          "<p class='error'>Error " + xhr.status + ": could not load " + url + "</p>";
+      }
+    }
+  };
+
+  xhr.onerror = function () {
+    document.getElementById("output").innerHTML =
+      "<p class='error'>Network error. Open this page through a web server, e.g. python3 -m http.server</p>";
+  };
+
+  xhr.open("GET", url, true);                 // true = asynchronous
+  xhr.send(null);
+  log("request sent for " + url);
+}
+
+// Walk the XML DOM and build an HTML table
+function displayTable(xml) {
+  var company = xml.documentElement;
+  var employees = xml.getElementsByTagName("employee");
+  var total = 0;
+
+  var html = "<h3>" + company.getAttribute("name") + " - " + employees.length + " employees</h3>";
+  html += "<table><tr><th>ID</th><th>Name</th><th>Designation</th><th>Department</th>" +
+          "<th>City</th><th>Salary (Rs.)</th></tr>";
+
+  for (var i = 0; i < employees.length; i++) {
+    var e = employees[i];
+    var salary = Number(text(e, "salary"));
+    total += salary;
+    html += "<tr><td>" + e.getAttribute("id") + "</td>" +
+            "<td>" + text(e, "name") + "</td>" +
+            "<td>" + text(e, "designation") + "</td>" +
+            "<td>" + text(e, "department") + "</td>" +
+            "<td>" + text(e, "city") + "</td>" +
+            "<td class='num'>" + salary.toLocaleString("en-IN") + "</td></tr>";
+  }
+  html += "<tr><th colspan='5'>Total salary</th><th class='num'>" + total.toLocaleString("en-IN") + "</th></tr></table>";
+  document.getElementById("output").innerHTML = html;
+}
+
+// Text of the first child element with the given tag name
+function text(parent, tag) {
+  var node = parent.getElementsByTagName(tag)[0];
+  return node && node.firstChild ? node.firstChild.nodeValue : "";
+}
+
+function clearAll() {
+  document.getElementById("output").innerHTML = "";
+  document.getElementById("log").textContent = "readyState log will appear here.";
+}
+</script>
+</body>
+</html>

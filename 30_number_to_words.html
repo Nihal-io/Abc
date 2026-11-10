@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  Question 30: Write an HTML page including any required JavaScript that takes a number from
+  one text field in the range of 0 to 999 and shows it in another text field in words.
+  If the number is out of range, it should show "out of range" and if it is not a number,
+  it should show "not a number" message in the result box.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q30 - Number to Words (0 to 999)</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f0f3f7; margin: 0; padding: 40px 10px; }
+  .box { background: #fff; max-width: 480px; margin: auto; padding: 20px 26px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  h2 { text-align: center; margin-top: 0; }
+  label { display: block; margin-top: 12px; font-weight: bold; }
+  input[type=text] { width: 100%; padding: 8px; font-size: 16px; box-sizing: border-box; }
+  #result { background: #f7f7f7; }
+  button { margin-top: 14px; padding: 8px 16px; font-size: 15px; cursor: pointer; }
+  .error { color: #c0392b; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Number to Words</h2>
+  <label for="number">Enter a number (0 - 999):</label>
+  <input type="text" id="number" placeholder="e.g. 547" oninput="convert()">
+
+  <label for="result">In words:</label>
+  <input type="text" id="result" readonly>
+
+  <button onclick="convert()">Convert</button>
+  <button onclick="document.getElementById('number').value=''; convert();">Clear</button>
+</div>
+
+<script>
+var ones = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+            "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+            "seventeen", "eighteen", "nineteen"];
+var tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+// Convert an integer 0..999 into words
+function toWords(n) {
+  if (n < 20) return ones[n];
+  if (n < 100) {
+    return tens[Math.floor(n / 10)] + (n % 10 ? "-" + ones[n % 10] : "");
+  }
+  var rest = n % 100;
+  return ones[Math.floor(n / 100)] + " hundred" + (rest ? " and " + toWords(rest) : "");
+}
+
+function convert() {
+  var input = document.getElementById("number").value.trim();
+  var result = document.getElementById("result");
+  result.className = "";
+
+  if (input === "") { result.value = ""; return; }
+
+  // Accept only plain decimal numbers like 45, -3, 12.5 (so "abc", "12a", "0x1F" are rejected)
+  var n = Number(input);
+  if (!/^[-+]?(\d+\.?\d*|\.\d+)$/.test(input) || isNaN(n)) {
+    result.value = "not a number";
+    result.className = "error";
+    return;
+  }
+
+  if (n < 0 || n > 999) {
+    result.value = "out of range";
+    result.className = "error";
+    return;
+  }
+
+  var whole = Math.floor(n);
+  var words = toWords(whole);
+
+  // Decimal part (e.g. 12.05 -> "twelve point zero five")
+  var dot = input.indexOf(".");
+  if (dot >= 0 && /\d/.test(input.slice(dot + 1))) {
+    var digits = input.slice(dot + 1).split("").map(function (d) { return ones[d]; });
+    words += " point " + digits.join(" ");
+  }
+  result.value = words.charAt(0).toUpperCase() + words.slice(1);
+}
+</script>
+</body>
+</html>

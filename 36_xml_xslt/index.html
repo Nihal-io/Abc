@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+  Question 36: Write a program to illustrate XML and XSLT.
+  index.html - loads books.xml and books.xsl with JavaScript and applies the stylesheet
+  using the browser's XSLTProcessor. Open it through a local web server
+  (e.g. python3 -m http.server) because browsers block loading files over file://.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q36 - XML and XSLT</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fa; }
+  .bar { margin-bottom: 14px; }
+  button { padding: 6px 12px; margin-right: 6px; cursor: pointer; }
+  pre { background: #fff; border: 1px solid #ccc; padding: 10px; max-height: 360px; overflow: auto; font-size: 13px; }
+  .error { color: #c0392b; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Q36: XML transformed with XSLT</h1>
+<div class="bar">
+  <button onclick="transform()">Apply XSLT (books.xsl)</button>
+  <button onclick="showRaw('books.xml')">Show raw books.xml</button>
+  <button onclick="showRaw('books.xsl')">Show raw books.xsl</button>
+  <a href="books.xml" target="_blank">Open books.xml directly (browser applies &lt;?xml-stylesheet?&gt;)</a>
+</div>
+<div id="output"></div>
+
+<script>
+// Load a file and return its text (fetch works only over http://, not file://)
+function load(url) {
+  return fetch(url).then(function (res) {
+    if (!res.ok) throw new Error(url + " : HTTP " + res.status);
+    return res.text();
+  });
+}
+
+function showError(err) {
+  document.getElementById("output").innerHTML =
+    "<p class='error'>Could not load the files: " + err.message + "</p>" +
+    "<p>Start a local server in this folder: <code>python3 -m http.server 8000</code> and open " +
+    "<code>http://localhost:8000/</code>. Browsers block XML/XSL loading on file://.</p>";
+}
+
+function transform() {
+  Promise.all([load("books.xml"), load("books.xsl")]).then(function (texts) {
+    var parser = new DOMParser();
+    var xml = parser.parseFromString(texts[0], "application/xml");
+    var xsl = parser.parseFromString(texts[1], "application/xml");
+
+    var processor = new XSLTProcessor();
+    processor.importStylesheet(xsl);
+    // Transform into a fragment that belongs to this HTML document
+    var fragment = processor.transformToFragment(xml, document);
+
+    var out = document.getElementById("output");
+    out.innerHTML = "";
+    out.appendChild(fragment);
+  }).catch(showError);
+}
+
+function showRaw(file) {
+  load(file).then(function (text) {
+    var pre = document.createElement("pre");
+    pre.textContent = text;
+    var out = document.getElementById("output");
+    out.innerHTML = "<h3>" + file + "</h3>";
+    out.appendChild(pre);
+  }).catch(showError);
+}
+
+transform();
+</script>
+</body>
+</html>

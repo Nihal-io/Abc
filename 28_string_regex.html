@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<!--
+  Question 28: Write a Java script with string processing and regular expressions.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q28 - String Processing and Regular Expressions</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; background: #f4f6f8; }
+  .box { background: #fff; padding: 16px 20px; border-radius: 6px; max-width: 900px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.15); }
+  h1 { font-size: 22px; }
+  h2 { font-size: 17px; margin-top: 0; color: #2c3e50; }
+  textarea, input[type=text] { width: 100%; box-sizing: border-box; padding: 6px; font-size: 14px; }
+  button { margin: 6px 6px 0 0; padding: 6px 12px; cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; vertical-align: top; font-size: 14px; }
+  th { background: #34495e; color: #fff; width: 30%; }
+  .ok { color: green; font-weight: bold; }
+  .bad { color: #c0392b; font-weight: bold; }
+  mark { background: #ffe066; }
+</style>
+</head>
+<body>
+<h1>Q28: String Processing and Regular Expressions in JavaScript</h1>
+
+<!-- Part 1: String processing -->
+<div class="box">
+  <h2>Part 1 - String Processing</h2>
+  <label for="text">Enter some text:</label>
+  <textarea id="text" rows="4">JavaScript is a scripting language. Contact us at info@example.com or support@college.edu, call 9876543210 before 15/08/2025. Madam saw a racecar!</textarea>
+  <button onclick="processString()">Process String</button>
+  <table id="strResult"></table>
+</div>
+
+<!-- Part 2: Regular expressions -->
+<div class="box">
+  <h2>Part 2 - Regular Expressions</h2>
+  <button onclick="runRegex()">Extract using RegExp (uses the text above)</button>
+  <table id="regexResult"></table>
+
+  <h2 style="margin-top:16px">Search &amp; Replace with a custom pattern</h2>
+  <label>Pattern (regex): <input type="text" id="pattern" value="\b\w*a\w*\b"></label>
+  <label>Flags: <input type="text" id="flags" value="gi"></label>
+  <label>Replace with (optional): <input type="text" id="replacement" value=""></label>
+  <button onclick="customRegex()">Highlight Matches</button>
+  <button onclick="customReplace()">Replace</button>
+  <div id="customResult" style="margin-top:10px"></div>
+</div>
+
+<!-- Part 3: Validation with regex -->
+<div class="box">
+  <h2>Part 3 - Validation using RegExp.test()</h2>
+  <label>Value to test: <input type="text" id="testValue" value="abc@gmail.com"></label>
+  <button onclick="validateValue()">Validate</button>
+  <table id="validateResult"></table>
+</div>
+
+<script>
+// Small helper: escape HTML so user text is shown safely
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Helper: fill a table from an array of [label, value] pairs
+function fillTable(id, rows) {
+  var html = "";
+  for (var i = 0; i < rows.length; i++) {
+    html += "<tr><th>" + rows[i][0] + "</th><td>" + rows[i][1] + "</td></tr>";
+  }
+  document.getElementById(id).innerHTML = html;
+}
+
+// ---------- Part 1: String methods ----------
+function processString() {
+  var s = document.getElementById("text").value;
+  var words = s.trim().split(/\s+/).filter(function (w) { return w.length > 0; });
+  var vowels = (s.match(/[aeiou]/gi) || []).length;
+
+  // Title Case: capitalise first letter of each word
+  var titleCase = s.toLowerCase().replace(/\b[a-z]/g, function (c) { return c.toUpperCase(); });
+
+  // Palindrome check on letters only
+  var clean = s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  var isPal = clean === clean.split("").reverse().join("");
+
+  // Character frequency of letters (top 5)
+  var freq = {};
+  for (var i = 0; i < clean.length; i++) {
+    var ch = clean.charAt(i);
+    if (/[a-z]/.test(ch)) freq[ch] = (freq[ch] || 0) + 1;
+  }
+  var top = Object.keys(freq).sort(function (a, b) { return freq[b] - freq[a]; }).slice(0, 5)
+    .map(function (k) { return k + "=" + freq[k]; }).join(", ");
+
+  fillTable("strResult", [
+    ["Length", s.length],
+    ["Upper case", esc(s.toUpperCase())],
+    ["Lower case", esc(s.toLowerCase())],
+    ["Title Case", esc(titleCase)],
+    ["Reversed", esc(s.split("").reverse().join(""))],
+    ["Number of words", words.length],
+    ["Number of vowels", vowels],
+    ["First word / Last word", esc(words[0] || "") + " / " + esc(words[words.length - 1] || "")],
+    ["Longest word", esc(words.slice().sort(function (a, b) { return b.length - a.length; })[0] || "")],
+    ["indexOf('script')", s.indexOf("script")],
+    ["substring(0, 10)", esc(s.substring(0, 10))],
+    ["charAt(0) / charCodeAt(0)", esc(s.charAt(0)) + " / " + s.charCodeAt(0)],
+    ["includes('JavaScript')", s.includes("JavaScript")],
+    ["Whole text is palindrome?", isPal ? "Yes" : "No"],
+    ["Top 5 letter frequencies", top]
+  ]);
+}
+
+// ---------- Part 2: Extraction with regular expressions ----------
+function runRegex() {
+  var s = document.getElementById("text").value;
+
+  var emails  = s.match(/[\w.+-]+@[\w-]+\.[A-Za-z]{2,}/g) || [];
+  var phones  = s.match(/\b[6-9]\d{9}\b/g) || [];
+  var dates   = s.match(/\b\d{2}\/\d{2}\/\d{4}\b/g) || [];
+  var numbers = s.match(/\d+/g) || [];
+  var capWords = s.match(/\b[A-Z][a-z]+\b/g) || [];
+
+  // Palindrome words of length >= 3 using match + filter
+  var palWords = (s.match(/\b[a-zA-Z]{3,}\b/g) || []).filter(function (w) {
+    var l = w.toLowerCase();
+    return l === l.split("").reverse().join("");
+  });
+
+  // Capturing groups with exec(): split each email into user and domain
+  var re = /([\w.+-]+)@([\w-]+\.[A-Za-z]{2,})/g, m, parts = [];
+  while ((m = re.exec(s)) !== null) {
+    parts.push("user = <b>" + esc(m[1]) + "</b>, domain = <b>" + esc(m[2]) + "</b>");
+  }
+
+  // Date format change using groups in replace(): dd/mm/yyyy -> yyyy-mm-dd
+  var isoDates = s.replace(/(\d{2})\/(\d{2})\/(\d{4})/g, "$3-$2-$1");
+
+  // Mask the phone numbers: keep last 4 digits
+  var masked = s.replace(/\b[6-9]\d{5}(\d{4})\b/g, "XXXXXX$1");
+
+  fillTable("regexResult", [
+    ["E-mail addresses", esc(emails.join(", ")) || "none"],
+    ["E-mail parts (exec + groups)", parts.join("<br>") || "none"],
+    ["Mobile numbers", phones.join(", ") || "none"],
+    ["Dates (dd/mm/yyyy)", dates.join(", ") || "none"],
+    ["All numbers", numbers.join(", ") || "none"],
+    ["Capitalised words", esc(capWords.join(", ")) || "none"],
+    ["Palindrome words", esc(palWords.join(", ")) || "none"],
+    ["Dates converted to yyyy-mm-dd", esc(isoDates)],
+    ["Phone numbers masked", esc(masked)],
+    ["split() on punctuation", esc(s.split(/[.,!?]\s*/).filter(Boolean).join(" | "))],
+    ["search(/\\d/) - first digit at", s.search(/\d/)]
+  ]);
+}
+
+// Build a RegExp from user input; returns null and shows error if invalid
+function buildRegex() {
+  try {
+    return new RegExp(document.getElementById("pattern").value, document.getElementById("flags").value);
+  } catch (e) {
+    document.getElementById("customResult").innerHTML = "<span class='bad'>Invalid pattern: " + esc(e.message) + "</span>";
+    return null;
+  }
+}
+
+function customRegex() {
+  var re = buildRegex();
+  if (!re) return;
+  var s = document.getElementById("text").value;
+  var all = re.global ? (s.match(re) || []) : (s.match(re) ? [s.match(re)[0]] : []);
+  // Highlight each match (escape the text pieces, wrap matches in <mark>)
+  var out = "", last = 0, m;
+  var g = new RegExp(re.source, re.flags.indexOf("g") >= 0 ? re.flags : re.flags + "g");
+  while ((m = g.exec(s)) !== null) {
+    if (m[0].length === 0) { g.lastIndex++; continue; }
+    out += esc(s.substring(last, m.index)) + "<mark>" + esc(m[0]) + "</mark>";
+    last = m.index + m[0].length;
+  }
+  out += esc(s.substring(last));
+  document.getElementById("customResult").innerHTML =
+    "<b>" + all.length + "</b> match(es)" + (re.global ? "" : " (add flag g for all)") + ":<br>" + out;
+}
+
+function customReplace() {
+  var re = buildRegex();
+  if (!re) return;
+  var s = document.getElementById("text").value;
+  var r = document.getElementById("replacement").value;
+  document.getElementById("customResult").innerHTML = "<b>Result:</b><br>" + esc(s.replace(re, r));
+}
+
+// ---------- Part 3: Validation ----------
+function validateValue() {
+  var v = document.getElementById("testValue").value;
+  var checks = [
+    ["E-mail", /^[\w.+-]+@[A-Za-z0-9-]+(\.[A-Za-z]{2,})+$/],
+    ["10-digit mobile", /^[6-9]\d{9}$/],
+    ["Only alphabets", /^[A-Za-z]+$/],
+    ["Integer", /^[-+]?\d+$/],
+    ["Decimal number", /^[-+]?\d*\.?\d+$/],
+    ["Date dd/mm/yyyy", /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/],
+    ["Strong password (8+, upper, lower, digit, symbol)", /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/],
+    ["URL", /^https?:\/\/[\w-]+(\.[\w-]+)+(\/\S*)?$/],
+    ["Indian PIN code", /^[1-9]\d{5}$/]
+  ];
+  var rows = checks.map(function (c) {
+    return [c[0] + "<br><small>" + esc(c[1].toString()) + "</small>",
+            c[1].test(v) ? "<span class='ok'>Valid</span>" : "<span class='bad'>Invalid</span>"];
+  });
+  fillTable("validateResult", rows);
+}
+
+// Show results on load
+processString();
+runRegex();
+validateValue();
+</script>
+</body>
+</html>

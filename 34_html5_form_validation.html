@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<!--
+  Question 34: Develop HTML5 form with client validations using Java Script.
+  (Uses HTML5 input types/attributes - required, pattern, min/max, minlength, type=email/url/
+   date/number/tel/range - together with the JavaScript Constraint Validation API:
+   checkValidity(), validity.*, setCustomValidity() and custom error messages.)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q34 - HTML5 Form with JavaScript Validation</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #eef2f7; margin: 0; padding: 30px 10px; }
+  form { background: #fff; max-width: 520px; margin: auto; padding: 20px 28px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  h2 { text-align: center; margin-top: 0; color: #2c3e50; }
+  fieldset { border: 1px solid #ccd; border-radius: 6px; margin-bottom: 12px; }
+  legend { font-weight: bold; color: #34495e; }
+  label { display: block; margin-top: 10px; font-weight: bold; font-size: 14px; }
+  input, select, textarea { width: 100%; padding: 6px; box-sizing: border-box; font-size: 14px; border: 1px solid #aaa; border-radius: 4px; }
+  input[type=checkbox], input[type=radio] { width: auto; }
+  input[type=range] { padding: 0; }
+  /* HTML5 CSS pseudo-classes, applied only after the user has touched the field */
+  .touched:invalid { border: 2px solid #e74c3c; background: #fdf1f0; }
+  .touched:valid { border: 2px solid #27ae60; }
+  .msg { color: #e74c3c; font-size: 12px; min-height: 15px; display: block; }
+  .buttons { text-align: center; margin-top: 10px; }
+  button { padding: 8px 18px; margin: 0 6px; font-size: 15px; cursor: pointer; }
+  #summary { max-width: 520px; margin: 14px auto; background: #fff; padding: 12px 20px; border-radius: 8px; display: none; }
+  #summary table { border-collapse: collapse; width: 100%; }
+  #summary td, #summary th { border: 1px solid #ccc; padding: 5px 8px; text-align: left; }
+</style>
+</head>
+<body>
+<form id="jobForm" novalidate>
+  <h2>Job Application (HTML5)</h2>
+
+  <fieldset>
+    <legend>Personal details</legend>
+    <label for="fullname">Full Name *</label>
+    <input type="text" id="fullname" name="fullname" required minlength="3" maxlength="40"
+           pattern="[A-Za-z ]+" placeholder="Only letters and spaces">
+    <span class="msg"></span>
+
+    <label for="email">E-mail *</label>
+    <input type="email" id="email" name="email" required placeholder="name@domain.com">
+    <span class="msg"></span>
+
+    <label for="phone">Phone *</label>
+    <input type="tel" id="phone" name="phone" required pattern="[6-9][0-9]{9}" placeholder="10 digits, starts with 6-9">
+    <span class="msg"></span>
+
+    <label for="dob">Date of Birth *</label>
+    <input type="date" id="dob" name="dob" required min="1960-01-01">
+    <span class="msg"></span>
+
+    <label for="age">Age *</label>
+    <input type="number" id="age" name="age" required min="18" max="60" step="1">
+    <span class="msg"></span>
+  </fieldset>
+
+  <fieldset>
+    <legend>Profile</legend>
+    <label for="website">Portfolio / Website</label>
+    <input type="url" id="website" name="website" placeholder="https://example.com">
+    <span class="msg"></span>
+
+    <label for="post">Post applied for *</label>
+    <select id="post" name="post" required>
+      <option value="">-- Select --</option>
+      <option>Web Developer</option>
+      <option>Software Tester</option>
+      <option>System Administrator</option>
+    </select>
+    <span class="msg"></span>
+
+    <label for="experience">Experience (years): <output id="expOut">2</output></label>
+    <input type="range" id="experience" name="experience" min="0" max="20" value="2">
+
+    <label for="password">Password *</label>
+    <input type="password" id="password" name="password" required minlength="8">
+    <span class="msg"></span>
+
+    <label for="confirm">Confirm Password *</label>
+    <input type="password" id="confirm" name="confirm" required>
+    <span class="msg"></span>
+
+    <label for="about">About yourself</label>
+    <textarea id="about" name="about" rows="3" maxlength="200" placeholder="Max 200 characters"></textarea>
+    <span class="msg"></span>
+
+    <label><input type="checkbox" id="agree" name="agree" required> I accept the terms *</label>
+    <span class="msg"></span>
+  </fieldset>
+
+  <div class="buttons">
+    <button type="submit">Submit</button>
+    <button type="reset">Reset</button>
+  </div>
+</form>
+
+<div id="summary"></div>
+
+<script>
+var form = document.getElementById("jobForm");
+
+// ---- Custom messages chosen from the ValidityState of each field ----
+function messageFor(field) {
+  var v = field.validity;
+  if (v.valueMissing) {
+    return field.type === "checkbox" ? "You must accept the terms." : "This field is required.";
+  }
+  if (v.typeMismatch) {
+    if (field.type === "email") return "Enter a valid e-mail address, e.g. name@domain.com";
+    if (field.type === "url") return "Enter a valid URL starting with http:// or https://";
+  }
+  if (v.patternMismatch) {
+    if (field.id === "fullname") return "Name may contain only letters and spaces.";
+    if (field.id === "phone") return "Phone must be 10 digits and start with 6, 7, 8 or 9.";
+  }
+  if (v.tooShort) return "Please enter at least " + field.minLength + " characters (you typed " + field.value.length + ").";
+  if (v.tooLong) return "Please enter at most " + field.maxLength + " characters.";
+  if (v.rangeUnderflow) return "Value must be " + field.min + " or more.";
+  if (v.rangeOverflow) return "Value must be " + field.max + " or less.";
+  if (v.stepMismatch) return "Please enter a whole number.";
+  if (v.badInput) return "Please enter a valid value.";
+  if (v.customError) return field.validationMessage;   // message set by setCustomValidity()
+  return "";
+}
+
+// ---- Extra rules that plain HTML5 attributes cannot express -> setCustomValidity() ----
+function customChecks() {
+  var pwd = document.getElementById("password");
+  var confirm = document.getElementById("confirm");
+  var dob = document.getElementById("dob");
+  var age = document.getElementById("age");
+
+  // Password must contain at least one digit and one letter
+  pwd.setCustomValidity("");
+  if (pwd.value.length >= 8 && !(/\d/.test(pwd.value) && /[A-Za-z]/.test(pwd.value))) {
+    pwd.setCustomValidity("Password must contain both letters and digits.");
+  }
+
+  // Confirm password must match
+  confirm.setCustomValidity("");
+  if (confirm.value !== "" && confirm.value !== pwd.value) {
+    confirm.setCustomValidity("Passwords do not match.");
+  }
+
+  // Date of birth cannot be in the future, and must agree with the age entered
+  dob.setCustomValidity("");
+  if (dob.value) {
+    var birth = new Date(dob.value);
+    var today = new Date();
+    if (birth > today) {
+      dob.setCustomValidity("Date of birth cannot be in the future.");
+    } else if (age.value !== "") {
+      var years = today.getFullYear() - birth.getFullYear();
+      var m = today.getMonth() - birth.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) years--;
+      if (years !== Number(age.value)) {
+        dob.setCustomValidity("Date of birth does not match the age entered (" + years + " years).");
+      }
+    }
+  }
+}
+
+// Show the message under one field
+function showMessage(field) {
+  var span = field.parentNode.tagName === "LABEL" ? field.parentNode.nextElementSibling : field.nextElementSibling;
+  if (span && span.classList.contains("msg")) span.textContent = messageFor(field);
+}
+
+var fields = form.querySelectorAll("input, select, textarea");
+
+// Live validation: mark as touched and re-check on every change
+fields.forEach(function (field) {
+  field.addEventListener("input", function () {
+    field.classList.add("touched");
+    customChecks();
+    fields.forEach(function (f) { if (f.classList.contains("touched")) showMessage(f); });
+  });
+  field.addEventListener("blur", function () {
+    field.classList.add("touched");
+    customChecks();
+    showMessage(field);
+  });
+});
+
+document.getElementById("experience").addEventListener("input", function () {
+  document.getElementById("expOut").textContent = this.value;
+});
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  customChecks();
+  fields.forEach(function (f) { f.classList.add("touched"); showMessage(f); });
+
+  var summary = document.getElementById("summary");
+  if (!form.checkValidity()) {           // Constraint Validation API on the whole form
+    summary.style.display = "none";
+    var firstBad = form.querySelector(":invalid");
+    if (firstBad) firstBad.focus();
+    return;
+  }
+
+  // All valid -> show the submitted data (password fields hidden)
+  var rows = "<tr><th>Field</th><th>Value</th></tr>";
+  new FormData(form).forEach(function (value, key) {
+    if (key === "password" || key === "confirm") value = "********";
+    var cell = document.createElement("td");
+    cell.textContent = value;
+    rows += "<tr><td>" + key + "</td>" + cell.outerHTML + "</tr>";
+  });
+  summary.innerHTML = "<h3 style='color:#27ae60'>Form is valid. Data submitted:</h3><table>" + rows + "</table>";
+  summary.style.display = "block";
+});
+
+form.addEventListener("reset", function () {
+  fields.forEach(function (f) { f.classList.remove("touched"); f.setCustomValidity(""); });
+  form.querySelectorAll(".msg").forEach(function (s) { s.textContent = ""; });
+  document.getElementById("expOut").textContent = "2";
+  document.getElementById("summary").style.display = "none";
+});
+</script>
+</body>
+</html>

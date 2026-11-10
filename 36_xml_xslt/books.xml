@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="books.xsl"?>
+<!--
+  Question 36: Write a program to illustrate XML and XSLT.
+  books.xml - the XML data. The processing instruction above links it to books.xsl,
+  so a browser that opens this file (through a web server) shows the transformed HTML.
+-->
+<library>
+  <book id="B101" category="Programming">
+    <title>Java: The Complete Reference</title>
+    <author>Herbert Schildt</author>
+    <publisher>McGraw Hill</publisher>
+    <year>2022</year>
+    <price>899</price>
+    <stock>12</stock>
+  </book>
+  <book id="B102" category="Web">
+    <title>HTML and CSS: Design and Build Websites</title>
+    <author>Jon Duckett</author>
+    <publisher>Wiley</publisher>
+    <year>2011</year>
+    <price>650</price>
+    <stock>0</stock>
+  </book>
+  <book id="B103" category="Web">
+    <title>JavaScript: The Definitive Guide</title>
+    <author>David Flanagan</author>
+    <publisher>O'Reilly</publisher>
+    <year>2020</year>
+    <price>1250</price>
+    <stock>5</stock>
+  </book>
+  <book id="B104" category="Database">
+    <title>Database System Concepts</title>
+    <author>Silberschatz, Korth, Sudarshan</author>
+    <publisher>McGraw Hill</publisher>
+    <year>2019</year>
+    <price>780</price>
+    <stock>3</stock>
+  </book>
+  <book id="B105" category="Programming">
+    <title>Let Us C</title>
+    <author>Yashavant Kanetkar</author>
+    <publisher>BPB Publications</publisher>
+    <year>2021</year>
+    <price>399</price>
+    <stock>25</stock>
+  </book>
+  <book id="B106" category="Web">
+    <title>Learning PHP, MySQL and JavaScript</title>
+    <author>Robin Nixon</author>
+    <publisher>O'Reilly</publisher>
+    <year>2021</year>
+    <price>1100</price>
+    <stock>2</stock>
+  </book>
+  <book id="B107" category="Networking">
+    <title>Computer Networks</title>
+    <author>Andrew S. Tanenbaum</author>
+    <publisher>Pearson</publisher>
+    <year>2021</year>
+    <price>950</price>
+    <stock>7</stock>
+  </book>
+</library>

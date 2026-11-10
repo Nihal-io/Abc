@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+  Question 31: Write a program to encrypt the given number to display the encrypted data
+  using Java Script.
+
+  Scheme used (classic digit-wise cipher):
+    Step 1: replace every digit d by (d + 7) % 10
+    Step 2: for a 4-digit number swap the 1st digit with the 3rd and the 2nd with the 4th.
+            Generalised for any length n: swap the first half with the second half, i.e.
+            rotate the digits left by floor(n/2) places (for n = 4 this is exactly 1<->3, 2<->4).
+  Decryption reverses it: rotate right by floor(n/2), then d -> (d + 3) % 10.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q31 - Number Encryption</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #eef1f6; margin: 0; padding: 30px 10px; }
+  .box { background: #fff; max-width: 560px; margin: auto; padding: 20px 26px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  h2 { margin-top: 0; text-align: center; }
+  input[type=text] { width: 100%; padding: 8px; font-size: 18px; letter-spacing: 3px; box-sizing: border-box; }
+  button { margin: 12px 6px 0 0; padding: 8px 14px; cursor: pointer; }
+  table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: left; }
+  th { background: #34495e; color: #fff; width: 45%; }
+  .big { font-size: 20px; font-weight: bold; letter-spacing: 3px; color: #1a5276; }
+  .ok { color: green; font-weight: bold; } .bad { color: #c0392b; font-weight: bold; }
+  .rule { font-size: 13px; color: #555; background: #f8f9fa; padding: 8px; border-left: 3px solid #34495e; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Encrypt a Number</h2>
+  <p class="rule">Rule: each digit d becomes (d + 7) % 10, then the first half of the digits is
+  swapped with the second half. For a 4-digit number this swaps the 1st digit with the 3rd and the 2nd with the 4th.</p>
+
+  <label for="num">Enter a number (digits only):</label>
+  <input type="text" id="num" value="1234">
+  <button onclick="doEncrypt()">Encrypt</button>
+  <button onclick="doDecrypt()">Decrypt</button>
+
+  <table id="out"></table>
+</div>
+
+<script>
+// Step 1 of encryption: (d + 7) % 10 for every digit
+function addSeven(digits) {
+  return digits.map(function (d) { return (d + 7) % 10; });
+}
+// Inverse of step 1: (d + 3) % 10  (because 7 + 3 = 10)
+function addThree(digits) {
+  return digits.map(function (d) { return (d + 3) % 10; });
+}
+// Step 2: rotate left by k (first half <-> second half)
+function rotateLeft(digits, k) {
+  return digits.slice(k).concat(digits.slice(0, k));
+}
+function rotateRight(digits, k) {
+  return digits.slice(digits.length - k).concat(digits.slice(0, digits.length - k));
+}
+
+function encrypt(str) {
+  var digits = str.split("").map(Number);
+  var step1 = addSeven(digits);
+  var step2 = rotateLeft(step1, Math.floor(digits.length / 2));
+  return { step1: step1.join(""), result: step2.join("") };
+}
+
+function decrypt(str) {
+  var digits = str.split("").map(Number);
+  var step1 = rotateRight(digits, Math.floor(digits.length / 2));
+  var step2 = addThree(step1);
+  return { step1: step1.join(""), result: step2.join("") };
+}
+
+// Read and validate the input; returns the digit string or null
+function readInput() {
+  var v = document.getElementById("num").value.trim();
+  if (!/^\d+$/.test(v)) {
+    document.getElementById("out").innerHTML =
+      "<tr><td class='bad'>Please enter digits only (0-9), e.g. 1234</td></tr>";
+    return null;
+  }
+  return v;
+}
+
+function doEncrypt() {
+  var v = readInput();
+  if (v === null) return;
+  var e = encrypt(v);
+  var back = decrypt(e.result).result;
+  document.getElementById("out").innerHTML =
+    "<tr><th>Original number</th><td class='big'>" + v + "</td></tr>" +
+    "<tr><th>After (d + 7) % 10</th><td>" + e.step1 + "</td></tr>" +
+    "<tr><th>After swapping halves (rotate by " + Math.floor(v.length / 2) + ")</th><td>" + e.result + "</td></tr>" +
+    "<tr><th>Encrypted number</th><td class='big'>" + e.result + "</td></tr>" +
+    "<tr><th>Decrypted back (check)</th><td>" + back + " " +
+      (back === v ? "<span class='ok'>&#10004; matches</span>" : "<span class='bad'>mismatch</span>") + "</td></tr>";
+}
+
+function doDecrypt() {
+  var v = readInput();
+  if (v === null) return;
+  var d = decrypt(v);
+  document.getElementById("out").innerHTML =
+    "<tr><th>Encrypted number</th><td class='big'>" + v + "</td></tr>" +
+    "<tr><th>After swapping halves back</th><td>" + d.step1 + "</td></tr>" +
+    "<tr><th>After (d + 3) % 10</th><td>" + d.result + "</td></tr>" +
+    "<tr><th>Decrypted (original) number</th><td class='big'>" + d.result + "</td></tr>";
+}
+
+doEncrypt();
+</script>
+</body>
+</html>

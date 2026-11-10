@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--
+  Question 32: To design a basic calculator using javascript.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q32 - Basic Calculator</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #dfe6ee; display: flex; justify-content: center; padding-top: 40px; margin: 0; }
+  .calc { background: #2c3e50; padding: 18px; border-radius: 12px; width: 280px; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
+  h2 { color: #fff; text-align: center; margin: 0 0 10px; font-size: 18px; }
+  #expr { width: 100%; height: 20px; color: #bdc3c7; text-align: right; font-size: 14px; overflow: hidden; }
+  #display { width: 100%; box-sizing: border-box; height: 52px; font-size: 26px; text-align: right; padding: 6px 10px;
+             border: none; border-radius: 6px; margin-bottom: 12px; background: #ecf0f1; }
+  .keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  button { height: 52px; font-size: 20px; border: none; border-radius: 6px; cursor: pointer; background: #ecf0f1; }
+  button:hover { filter: brightness(0.9); }
+  .op { background: #f39c12; color: #fff; }
+  .eq { background: #27ae60; color: #fff; grid-row: span 2; height: auto; }
+  .clr { background: #e74c3c; color: #fff; }
+  .zero { grid-column: span 2; }
+</style>
+</head>
+<body>
+<div class="calc">
+  <h2>Basic Calculator</h2>
+  <div id="expr"></div>
+  <input type="text" id="display" value="0" readonly>
+  <div class="keys">
+    <button class="clr" onclick="clearAll()">C</button>
+    <button class="clr" onclick="backspace()">&larr;</button>
+    <button class="op" onclick="percent()">%</button>
+    <button class="op" onclick="setOp('/')">&divide;</button>
+
+    <button onclick="digit('7')">7</button>
+    <button onclick="digit('8')">8</button>
+    <button onclick="digit('9')">9</button>
+    <button class="op" onclick="setOp('*')">&times;</button>
+
+    <button onclick="digit('4')">4</button>
+    <button onclick="digit('5')">5</button>
+    <button onclick="digit('6')">6</button>
+    <button class="op" onclick="setOp('-')">&minus;</button>
+
+    <button onclick="digit('1')">1</button>
+    <button onclick="digit('2')">2</button>
+    <button onclick="digit('3')">3</button>
+    <button class="op" onclick="setOp('+')">+</button>
+
+    <button onclick="toggleSign()">&plusmn;</button>
+    <button onclick="digit('0')">0</button>
+    <button onclick="digit('.')">.</button>
+    <button class="eq" onclick="equals()">=</button>
+  </div>
+</div>
+
+<script>
+var display = document.getElementById("display");
+var exprBox = document.getElementById("expr");
+var first = null;          // first operand
+var operator = null;       // pending operator
+var startNew = true;       // next digit starts a new number
+var symbols = { "+": "+", "-": "−", "*": "×", "/": "÷" };
+
+function digit(d) {
+  if (display.value === "Error") clearAll();
+  if (startNew) {
+    display.value = (d === ".") ? "0." : d;
+    startNew = false;
+    return;
+  }
+  if (d === "." && display.value.indexOf(".") >= 0) return;  // only one decimal point
+  display.value = (display.value === "0" && d !== ".") ? d : display.value + d;
+}
+
+function calculate(a, b, op) {
+  switch (op) {
+    case "+": return a + b;
+    case "-": return a - b;
+    case "*": return a * b;
+    case "/": return b === 0 ? "Error" : a / b;
+  }
+  return b;
+}
+
+// Round off floating point noise such as 0.1 + 0.2 = 0.30000000000000004
+function tidy(x) {
+  return (x === "Error") ? x : String(parseFloat(Number(x).toPrecision(12)));
+}
+
+function setOp(op) {
+  if (display.value === "Error") return;
+  var current = parseFloat(display.value);
+  if (operator !== null && !startNew) {      // chain: 2 + 3 + ... computes 5 first
+    var r = tidy(calculate(first, current, operator));
+    display.value = r;
+    if (r === "Error") { exprBox.textContent = "Cannot divide by zero"; first = null; operator = null; startNew = true; return; }
+    first = parseFloat(r);
+  } else {
+    first = current;
+  }
+  operator = op;
+  startNew = true;
+  exprBox.textContent = tidy(first) + " " + symbols[op];
+}
+
+function equals() {
+  if (operator === null || display.value === "Error") return;
+  var second = parseFloat(display.value);
+  var r = tidy(calculate(first, second, operator));
+  exprBox.textContent = tidy(first) + " " + symbols[operator] + " " + tidy(second) + " =";
+  if (r === "Error") exprBox.textContent = "Cannot divide by zero";
+  display.value = r;
+  first = null;
+  operator = null;
+  startNew = true;
+}
+
+function clearAll() {
+  display.value = "0";
+  exprBox.textContent = "";
+  first = null; operator = null; startNew = true;
+}
+
+function backspace() {
+  if (startNew || display.value === "Error") return;
+  display.value = display.value.length > 1 ? display.value.slice(0, -1) : "0";
+  if (display.value === "-") display.value = "0";
+}
+
+function toggleSign() {
+  if (display.value === "Error" || display.value === "0") return;
+  display.value = display.value.charAt(0) === "-" ? display.value.slice(1) : "-" + display.value;
+}
+
+function percent() {
+  if (display.value === "Error") return;
+  display.value = tidy(parseFloat(display.value) / 100);
+  startNew = true;
+}
+
+// Keyboard support
+document.addEventListener("keydown", function (e) {
+  if (/^[0-9.]$/.test(e.key)) digit(e.key);
+  else if ("+-*/".indexOf(e.key) >= 0) setOp(e.key);
+  else if (e.key === "Enter" || e.key === "=") { e.preventDefault(); equals(); }
+  else if (e.key === "Backspace") backspace();
+  else if (e.key === "Escape") clearAll();
+  else if (e.key === "%") percent();
+});
+</script>
+</body>
+</html>

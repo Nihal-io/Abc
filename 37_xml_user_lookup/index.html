@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--
+  Question 37: Create and save an XML document at the server, which contains 10 users information.
+  Write a program which takes User Id as input and returns the user details by taking the user
+  information from the XML document.
+  index.html - client-side version: requests users.xml from the server with XMLHttpRequest,
+  parses it with DOMParser and shows the user whose <userid> matches.
+  Serve the folder with a web server (python3 -m http.server or php -S), not file://.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q37 - User Lookup from XML</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #eef2f6; margin: 0; padding: 30px 10px; }
+  .box { background: #fff; max-width: 520px; margin: auto; padding: 20px 26px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  h2 { margin-top: 0; text-align: center; color: #2c3e50; }
+  input { padding: 7px; font-size: 15px; width: 160px; }
+  button { padding: 7px 14px; font-size: 14px; cursor: pointer; margin: 4px 2px; }
+  table { border-collapse: collapse; width: 100%; margin-top: 14px; }
+  th, td { border: 1px solid #bbb; padding: 6px 8px; text-align: left; }
+  th { background: #34495e; color: #fff; width: 35%; }
+  .error { color: #c0392b; font-weight: bold; margin-top: 12px; }
+  .hint { font-size: 13px; color: #555; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2>Find User by ID</h2>
+  <label for="uid">User ID:</label>
+  <input type="text" id="uid" placeholder="101 to 110">
+  <br>
+  <button onclick="findUser()">Search (JavaScript + XML)</button>
+  <button onclick="findUserPhp()">Search via PHP (getuser.php)</button>
+  <p class="hint">Valid IDs in users.xml: 101 to 110.</p>
+  <div id="result"></div>
+</div>
+
+<script>
+var usersXml = null;    // cached XML document
+
+// Load users.xml once using XMLHttpRequest, then call back with the parsed document
+function loadUsers(callback) {
+  if (usersXml) { callback(usersXml); return; }
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "users.xml", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== 4) return;
+    if (xhr.status === 200 || (xhr.status === 0 && xhr.responseText)) {
+      // Parse the text with DOMParser (works even if the server sends a wrong content type)
+      usersXml = new DOMParser().parseFromString(xhr.responseText, "application/xml");
+      callback(usersXml);
+    } else {
+      showError("Could not load users.xml (status " + xhr.status + "). Run a local server: python3 -m http.server");
+    }
+  };
+  xhr.onerror = function () {
+    showError("Request failed. Open this page through a web server (python3 -m http.server), not file://");
+  };
+  xhr.send();
+}
+
+function showError(msg) {
+  document.getElementById("result").innerHTML = "<p class='error'>" + msg + "</p>";
+}
+
+function getText(node, tag) {
+  var el = node.getElementsByTagName(tag)[0];
+  return el ? el.textContent : "";
+}
+
+function findUser() {
+  var id = document.getElementById("uid").value.trim();
+  if (!/^\d+$/.test(id)) { showError("Please enter a numeric User ID."); return; }
+
+  loadUsers(function (xml) {
+    var users = xml.getElementsByTagName("user");
+    for (var i = 0; i < users.length; i++) {
+      if (getText(users[i], "userid") === id) {
+        var fields = [["User ID", "userid"], ["Name", "name"], ["E-mail", "email"], ["Phone", "phone"],
+                      ["City", "city"], ["Course", "course"], ["Date of Birth", "dob"]];
+        var html = "<table>";
+        fields.forEach(function (f) {
+          html += "<tr><th>" + f[0] + "</th><td>" + getText(users[i], f[1]) + "</td></tr>";
+        });
+        document.getElementById("result").innerHTML = html + "</table>";
+        return;
+      }
+    }
+    showError("No user found with ID " + id + ".");
+  });
+}
+
+// Same lookup done on the server by getuser.php (needs: php -S localhost:8000)
+function findUserPhp() {
+  var id = document.getElementById("uid").value.trim();
+  if (!/^\d+$/.test(id)) { showError("Please enter a numeric User ID."); return; }
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "getuser.php?id=" + encodeURIComponent(id) + "&format=json", true);
+  xhr.onload = function () {
+    var data;
+    try { data = JSON.parse(xhr.responseText); }
+    catch (e) { showError("PHP did not run. Start the server with: php -S localhost:8000"); return; }
+    if (!data.found) { showError(data.message); return; }
+    var html = "<table>";
+    for (var key in data.user) {
+      var td = document.createElement("td");
+      td.textContent = data.user[key];
+      html += "<tr><th>" + key + "</th>" + td.outerHTML + "</tr>";
+    }
+    document.getElementById("result").innerHTML = html + "</table><p class='hint'>(answered by getuser.php)</p>";
+  };
+  xhr.onerror = function () { showError("Request failed. Start the server with: php -S localhost:8000"); };
+  xhr.send();
+}
+
+document.getElementById("uid").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") findUser();
+});
+</script>
+</body>
+</html>

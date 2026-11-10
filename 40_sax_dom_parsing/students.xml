@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Question 40: XML document processing using SAX and DOM.
+  students.xml - input document read by SAXParserDemo.java and DOMParserDemo.java.
+-->
+<students>
+  <student rollno="101">
+    <name>Ravi Kumar</name>
+    <course>MCA</course>
+    <marks>86</marks>
+    <city>Hyderabad</city>
+  </student>
+  <student rollno="102">
+    <name>Priya Sharma</name>
+    <course>MBA</course>
+    <marks>74</marks>
+    <city>Delhi</city>
+  </student>
+  <student rollno="103">
+    <name>Arjun Reddy</name>
+    <course>MCA</course>
+    <marks>91</marks>
+    <city>Bengaluru</city>
+  </student>
+  <student rollno="104">
+    <name>Sneha Patel</name>
+    <course>M.Tech</course>
+    <marks>58</marks>
+    <city>Ahmedabad</city>
+  </student>
+  <student rollno="105">
+    <name>Mohammed Irfan</name>
+    <course>MCA</course>
+    <marks>67</marks>
+    <city>Chennai</city>
+  </student>
+</students>

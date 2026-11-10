@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Question 38: Create an XML files with book-cover catalog and store the titles of the books in a
+  title attribute of each cover node. Modify the example so that every time the mouse hovers over
+  an image, the book's title is displayed below the image.
+  catalog.xml - every <cover> node keeps the book title in its "title" attribute and the
+  image file in its "src" attribute.
+-->
+<catalog>
+  <cover title="Java: The Complete Reference" author="Herbert Schildt" src="images/java_reference.svg"/>
+  <cover title="HTML and CSS" author="Jon Duckett" src="images/html_css.svg"/>
+  <cover title="JavaScript: The Definitive Guide" author="David Flanagan" src="images/javascript_guide.svg"/>
+  <cover title="Learning PHP, MySQL and JavaScript" author="Robin Nixon" src="images/php_mysql.svg"/>
+  <cover title="XML Bible" author="Elliotte Rusty Harold" src="images/xml_bible.svg"/>
+  <cover title="Computer Networks" author="Andrew S. Tanenbaum" src="images/computer_networks.svg"/>
+</catalog>

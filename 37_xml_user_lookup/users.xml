@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Question 37: Create and save an XML document at the server, which contains 10 users information.
+  Write a program which takes User Id as input and returns the user details by taking the user
+  information from the XML document.
+  users.xml - the data file stored on the server.
+-->
+<users>
+  <user>
+    <userid>101</userid>
+    <name>Ravi Kumar</name>
+    <email>ravi.kumar@example.com</email>
+    <phone>9876543210</phone>
+    <city>Hyderabad</city>
+    <course>MCA</course>
+    <dob>1999-04-12</dob>
+  </user>
+  <user>
+    <userid>102</userid>
+    <name>Priya Sharma</name>
+    <email>priya.sharma@example.com</email>
+    <phone>9123456780</phone>
+    <city>Delhi</city>
+    <course>MBA</course>
+    <dob>2000-07-23</dob>
+  </user>
+  <user>
+    <userid>103</userid>
+    <name>Arjun Reddy</name>
+    <email>arjun.reddy@example.com</email>
+    <phone>9988776655</phone>
+    <city>Bengaluru</city>
+    <course>MCA</course>
+    <dob>1998-11-02</dob>
+  </user>
+  <user>
+    <userid>104</userid>
+    <name>Sneha Patel</name>
+    <email>sneha.patel@example.com</email>
+    <phone>9090909090</phone>
+    <city>Ahmedabad</city>
+    <course>M.Tech</course>
+    <dob>1999-01-30</dob>
+  </user>
+  <user>
+    <userid>105</userid>
+    <name>Mohammed Irfan</name>
+    <email>irfan.m@example.com</email>
+    <phone>9345678123</phone>
+    <city>Chennai</city>
+    <course>MCA</course>
+    <dob>2000-03-15</dob>
+  </user>
+  <user>
+    <userid>106</userid>
+    <name>Kavya Nair</name>
+    <email>kavya.nair@example.com</email>
+    <phone>9567891234</phone>
+    <city>Kochi</city>
+    <course>MSc</course>
+    <dob>1999-09-09</dob>
+  </user>
+  <user>
+    <userid>107</userid>
+    <name>Rahul Verma</name>
+    <email>rahul.verma@example.com</email>
+    <phone>9812345670</phone>
+    <city>Lucknow</city>
+    <course>MBA</course>
+    <dob>1998-06-18</dob>
+  </user>
+  <user>
+    <userid>108</userid>
+    <name>Ananya Das</name>
+    <email>ananya.das@example.com</email>
+    <phone>9734567812</phone>
+    <city>Kolkata</city>
+    <course>MCA</course>
+    <dob>2001-02-27</dob>
+  </user>
+  <user>
+    <userid>109</userid>
+    <name>Vikram Singh</name>
+    <email>vikram.singh@example.com</email>
+    <phone>9654321870</phone>
+    <city>Jaipur</city>
+    <course>M.Tech</course>
+    <dob>1999-12-05</dob>
+  </user>
+  <user>
+    <userid>110</userid>
+    <name>Lakshmi Iyer</name>
+    <email>lakshmi.iyer@example.com</email>
+    <phone>9445566778</phone>
+    <city>Pune</city>
+    <course>MCA</course>
+    <dob>2000-08-14</dob>
+  </user>
+</users>

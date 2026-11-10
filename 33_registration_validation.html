@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--
+  Question 33: Write a Javascript code to validate ALL Fields in user registration form.
+    a) First Name (Name should contains alphabets and the length should not be less than 6 characters)
+    b) Password (Password should not be less than 6 characters length)
+    c) E-mail id (should not contain any invalid and must follow the standard pattern name@domain.com)
+    d) Mobile Number (Phone number should contain 10 digits only)
+    e) Last Name and Address (should not be Empty)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q33 - Registration Form Validation</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #eaf0f6; margin: 0; padding: 30px 10px; }
+  .form-box { background: #fff; max-width: 480px; margin: auto; padding: 20px 28px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+  h2 { text-align: center; margin-top: 0; color: #2c3e50; }
+  label { display: block; font-weight: bold; margin-top: 12px; }
+  input, textarea { width: 100%; padding: 7px; box-sizing: border-box; border: 1px solid #aaa; border-radius: 4px; font-size: 14px; }
+  input.invalid, textarea.invalid { border: 2px solid #e74c3c; background: #fdf0ef; }
+  input.valid, textarea.valid { border: 2px solid #27ae60; }
+  .err { color: #e74c3c; font-size: 13px; min-height: 16px; display: block; }
+  .buttons { text-align: center; margin-top: 16px; }
+  button { padding: 8px 18px; margin: 0 6px; cursor: pointer; font-size: 15px; }
+  #success { display: none; background: #e8f8ef; border: 1px solid #27ae60; padding: 10px; margin-top: 14px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="form-box">
+  <h2>User Registration</h2>
+  <form id="regForm" name="regForm" onsubmit="return validateForm()" novalidate>
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="fname">
+    <span class="err" id="fnameErr"></span>
+
+    <label for="lname">Last Name</label>
+    <input type="text" id="lname" name="lname">
+    <span class="err" id="lnameErr"></span>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password">
+    <span class="err" id="passwordErr"></span>
+
+    <label for="email">E-mail ID</label>
+    <input type="text" id="email" name="email" placeholder="name@domain.com">
+    <span class="err" id="emailErr"></span>
+
+    <label for="mobile">Mobile Number</label>
+    <input type="text" id="mobile" name="mobile" maxlength="10">
+    <span class="err" id="mobileErr"></span>
+
+    <label for="address">Address</label>
+    <textarea id="address" name="address" rows="3"></textarea>
+    <span class="err" id="addressErr"></span>
+
+    <div class="buttons">
+      <button type="submit">Register</button>
+      <button type="reset" onclick="resetMessages()">Reset</button>
+    </div>
+  </form>
+  <div id="success"></div>
+</div>
+
+<script>
+// Show / clear the error message of one field. Returns true if the field is valid.
+function setResult(id, message) {
+  var field = document.getElementById(id);
+  document.getElementById(id + "Err").textContent = message;
+  field.className = message ? "invalid" : "valid";
+  return message === "";
+}
+
+function checkFirstName() {
+  var v = document.getElementById("fname").value.trim();
+  if (v === "") return setResult("fname", "First name is required.");
+  if (!/^[A-Za-z]+$/.test(v)) return setResult("fname", "First name must contain alphabets only.");
+  if (v.length < 6) return setResult("fname", "First name must be at least 6 characters long.");
+  return setResult("fname", "");
+}
+
+function checkLastName() {
+  var v = document.getElementById("lname").value.trim();
+  return setResult("lname", v === "" ? "Last name should not be empty." : "");
+}
+
+function checkPassword() {
+  var v = document.getElementById("password").value;
+  if (v === "") return setResult("password", "Password is required.");
+  if (v.length < 6) return setResult("password", "Password must be at least 6 characters long.");
+  return setResult("password", "");
+}
+
+function checkEmail() {
+  var v = document.getElementById("email").value.trim();
+  // name@domain.com : name = letters/digits . _ - ; domain = letters/digits/- ; then .com/.in/.co.in etc.
+  var pattern = /^[A-Za-z0-9._-]+@[A-Za-z0-9-]+(\.[A-Za-z]{2,})+$/;
+  if (v === "") return setResult("email", "E-mail ID is required.");
+  if (!pattern.test(v)) return setResult("email", "Enter a valid e-mail like name@domain.com");
+  return setResult("email", "");
+}
+
+function checkMobile() {
+  var v = document.getElementById("mobile").value.trim();
+  if (v === "") return setResult("mobile", "Mobile number is required.");
+  if (!/^\d{10}$/.test(v)) return setResult("mobile", "Mobile number must contain exactly 10 digits only.");
+  return setResult("mobile", "");
+}
+
+function checkAddress() {
+  var v = document.getElementById("address").value.trim();
+  return setResult("address", v === "" ? "Address should not be empty." : "");
+}
+
+// Validate ALL fields (every check runs, so all errors are shown at once)
+function validateForm() {
+  var results = [checkFirstName(), checkLastName(), checkPassword(),
+                 checkEmail(), checkMobile(), checkAddress()];
+  var allValid = results.every(function (r) { return r; });
+  var box = document.getElementById("success");
+
+  if (allValid) {
+    var f = document.getElementById("regForm");
+    box.style.display = "block";
+    box.textContent = "Registration successful! Welcome, " + f.fname.value.trim() + " " + f.lname.value.trim() + ".";
+  } else {
+    box.style.display = "none";
+    alert("Please correct the highlighted fields.");
+  }
+  return false;   // keep the page here for the demo (return allValid to really submit)
+}
+
+function resetMessages() {
+  ["fname", "lname", "password", "email", "mobile", "address"].forEach(function (id) {
+    document.getElementById(id + "Err").textContent = "";
+    document.getElementById(id).className = "";
+  });
+  document.getElementById("success").style.display = "none";
+}
+
+// Live validation when the user leaves a field
+document.getElementById("fname").onblur = checkFirstName;
+document.getElementById("lname").onblur = checkLastName;
+document.getElementById("password").onblur = checkPassword;
+document.getElementById("email").onblur = checkEmail;
+document.getElementById("mobile").onblur = checkMobile;
+document.getElementById("address").onblur = checkAddress;
+</script>
+</body>
+</html>

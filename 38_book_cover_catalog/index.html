@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!--
+  Question 38: Create an XML files with book-cover catalog and store the titles of the books in a
+  title attribute of each cover node. Modify the example so that every time the mouse hovers over
+  an image, the book's title is displayed below the image.
+  index.html - loads catalog.xml with XMLHttpRequest, builds an <img> for every <cover> node and
+  shows the title (read from the cover's "title" attribute) below the image on mouse hover.
+  Serve with: python3 -m http.server   (XHR does not work on file://)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Q38 - Book Cover Catalog</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f2f4f7; margin: 20px; }
+  h1 { color: #2c3e50; font-size: 24px; }
+  #catalog { display: flex; flex-wrap: wrap; gap: 22px; }
+  .book { width: 160px; text-align: center; }
+  .book img { width: 160px; height: 220px; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,.3);
+              transition: transform .2s; cursor: pointer; }
+  .book img:hover { transform: scale(1.05); }
+  .caption { min-height: 40px; margin-top: 8px; font-size: 14px; font-weight: bold; color: #1a5276; }
+  .error { color: #c0392b; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Book Cover Catalog</h1>
+<p>Move the mouse over a cover to see the book's title below it.</p>
+<div id="catalog">Loading catalog.xml ...</div>
+
+<script>
+function loadCatalog() {
+  var xhr = new XMLHttpRequest();
+  xhr.open("GET", "catalog.xml", true);
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200 && xhr.responseXML) {
+        showCovers(xhr.responseXML);
+      } else {
+        document.getElementById("catalog").innerHTML =
+          "<p class='error'>Could not load catalog.xml. Serve this folder with " +
+          "<code>python3 -m http.server</code> and open http://localhost:8000/</p>";
+      }
+    }
+  };
+  xhr.send();
+}
+
+function showCovers(xml) {
+  var container = document.getElementById("catalog");
+  container.innerHTML = "";
+  var covers = xml.getElementsByTagName("cover");
+
+  for (var i = 0; i < covers.length; i++) {
+    var title = covers[i].getAttribute("title");     // title stored as an attribute
+    var src = covers[i].getAttribute("src");
+
+    var box = document.createElement("div");
+    box.className = "book";
+
+    var img = document.createElement("img");
+    img.src = src;
+    img.alt = "Book cover";
+
+    var caption = document.createElement("div");
+    caption.className = "caption";
+
+    // On hover, show the title below the image; clear it when the mouse leaves
+    img.onmouseover = (function (cap, t) {
+      return function () { cap.textContent = t; };
+    })(caption, title);
+    img.onmouseout = (function (cap) {
+      return function () { cap.textContent = ""; };
+    })(caption);
+
+    box.appendChild(img);
+    box.appendChild(caption);
+    container.appendChild(box);
+  }
+}
+
+loadCatalog();
+</script>
+</body>
+</html>

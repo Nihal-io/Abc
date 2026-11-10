@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Question 39: Write a program on "raw" AJAX implementation using the XMLHttpRequest object to
+  fetch and display data from an XML file.
+  employees.xml - the XML data file fetched by index.html.
+-->
+<company name="TechSoft Solutions">
+  <employee id="E01">
+    <name>Ravi Kumar</name>
+    <designation>Software Engineer</designation>
+    <department>Development</department>
+    <salary>55000</salary>
+    <city>Hyderabad</city>
+  </employee>
+  <employee id="E02">
+    <name>Priya Sharma</name>
+    <designation>Team Lead</designation>
+    <department>Development</department>
+    <salary>85000</salary>
+    <city>Bengaluru</city>
+  </employee>
+  <employee id="E03">
+    <name>Arjun Reddy</name>
+    <designation>Test Engineer</designation>
+    <department>Testing</department>
+    <salary>45000</salary>
+    <city>Chennai</city>
+  </employee>
+  <employee id="E04">
+    <name>Sneha Patel</name>
+    <designation>UI Designer</designation>
+    <department>Design</department>
+    <salary>50000</salary>
+    <city>Pune</city>
+  </employee>
+  <employee id="E05">
+    <name>Mohammed Irfan</name>
+    <designation>DevOps Engineer</designation>
+    <department>Operations</department>
+    <salary>65000</salary>
+    <city>Hyderabad</city>
+  </employee>
+  <employee id="E06">
+    <name>Kavya Nair</name>
+    <designation>HR Executive</designation>
+    <department>HR</department>
+    <salary>40000</salary>
+    <city>Kochi</city>
+  </employee>
+</company>
