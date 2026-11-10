@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) v) - Servlets
+  A web application takes a name as input and on submit it shows a hello<name> page where <name>
+  is taken from the request. It shows the start time at the right top corner of the page and
+  provides the logout button. On clicking this button, it should show a logout page with
+  Thank You<name> message with the duration of usage. (Use session to store name and time).
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Hello (Servlet)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 320px; margin: 60px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; text-align: center; }
+    input[type=text] { width: 100%; padding: 6px; box-sizing: border-box; }
+    input[type=submit] { margin-top: 15px; width: 100%; padding: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Enter your name</h2>
+    <form action="hello" method="post">
+      <input type="text" name="name" placeholder="Your name" required>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>

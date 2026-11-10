@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Question 49 (b) ii) - Servlets: user data stored in an XML file instead of a database.
+  Kept under WEB-INF so the browser cannot download it directly.
+-->
+<users>
+  <user>
+    <username>admin</username>
+    <password>admin123</password>
+    <fullname>Administrator</fullname>
+  </user>
+  <user>
+    <username>ravi</username>
+    <password>ravi@123</password>
+    <fullname>Ravi Kumar</fullname>
+  </user>
+  <user>
+    <username>priya</username>
+    <password>priya@123</password>
+    <fullname>Priya Sharma</fullname>
+  </user>
+</users>

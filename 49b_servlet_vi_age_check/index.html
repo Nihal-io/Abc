@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) vi) - Servlets
+  A web application that takes name and age from an HTML page. If the age is less than 18, it
+  should send a page with "Hello <name>, you are not authorized to visit this site" message,
+  where <name> should be replaced with the entered name. Otherwise it should send
+  "Welcome <name> to this site" message.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Check (Servlet)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 320px; margin: 60px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=number] { width: 100%; padding: 6px; box-sizing: border-box; }
+    input[type=submit] { margin-top: 15px; width: 100%; padding: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Enter your details</h2>
+    <form action="agecheck" method="post">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" min="0" max="150" required>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</body>
+</html>

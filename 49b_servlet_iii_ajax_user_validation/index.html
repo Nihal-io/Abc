@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) iii) - Servlets
+  Modify the above program (49 b i: user validation web application) using AJAX to show the
+  result on the same page below the submit button.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Validation (Servlet + AJAX)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 320px; margin: 60px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=password] { width: 100%; padding: 6px; box-sizing: border-box; }
+    button { margin-top: 15px; width: 100%; padding: 8px; }
+    #result { margin-top: 15px; min-height: 20px; font-weight: bold; text-align: center; }
+    .ok { color: green; }
+    .fail { color: red; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Login (AJAX)</h2>
+    <form id="loginForm">
+      <label for="username">Login name</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      <button type="submit">Login</button>
+    </form>
+    <!-- The servlet's reply is shown here, below the submit button -->
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").onsubmit = function (event) {
+      event.preventDefault();               // do not reload the page
+      var result = document.getElementById("result");
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "ajaxlogin", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          // 200 = valid user, anything else = failure / error
+          result.className = (xhr.status === 200) ? "ok" : "fail";
+          result.textContent = xhr.responseText || "Server error (" + xhr.status + ")";
+        }
+      };
+      result.className = "";
+      result.textContent = "Checking...";
+      xhr.send("username=" + encodeURIComponent(username) +
+               "&password=" + encodeURIComponent(password));
+    };
+  </script>
+</body>
+</html>

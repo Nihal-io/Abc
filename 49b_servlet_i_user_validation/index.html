@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) i) - Servlets
+  A user validation web application, where the user submits the login name and password to
+  the server. The name and password are checked against the data already available in
+  Database and if the data matches, a successful login page is returned. Otherwise a failure
+  message is shown to the user.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Validation (Servlet + JDBC)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 320px; margin: 60px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=password] { width: 100%; padding: 6px; box-sizing: border-box; }
+    input[type=submit] { margin-top: 15px; width: 100%; padding: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Login</h2>
+    <form action="login" method="post">
+      <label for="username">Login name</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      <input type="submit" value="Login">
+    </form>
+  </div>
+</body>
+</html>

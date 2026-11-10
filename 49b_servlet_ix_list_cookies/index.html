@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) ix) - Servlets
+  A web application that lists all cookies stored in the browser on clicking "List Cookies"
+  button. Add cookies if necessary.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookies (Servlet)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 340px; margin: 40px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=number] { width: 100%; padding: 6px; box-sizing: border-box; }
+    input[type=submit] { margin-top: 15px; width: 100%; padding: 8px; }
+    hr { margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Add a Cookie</h2>
+    <form action="addcookie" method="post">
+      <label for="cname">Cookie name</label>
+      <input type="text" id="cname" name="cname" pattern="[A-Za-z0-9_\-]+"
+             title="Letters, digits, _ and - only" required>
+      <label for="cvalue">Cookie value</label>
+      <input type="text" id="cvalue" name="cvalue" required>
+      <label for="minutes">Keep for (minutes)</label>
+      <input type="number" id="minutes" name="minutes" min="1" max="10080" value="60">
+      <input type="submit" value="Add Cookie">
+    </form>
+
+    <form action="addcookie" method="post">
+      <input type="hidden" name="sample" value="yes">
+      <input type="submit" value="Add Sample Cookies">
+    </form>
+
+    <hr>
+    <form action="listcookies" method="get">
+      <input type="submit" value="List Cookies">
+    </form>
+  </div>
+</body>
+</html>

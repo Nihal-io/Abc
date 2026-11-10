@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) viii) - Servlets
+  A web application for implementation: The user is first served a login page which takes
+  user's name and password. After submitting the details the server checks these values against
+  the data from a database and takes the following decisions. If name and password matches
+  serves a welcome page with user's full name. If name and password doesn't match, then serves
+  "password mismatch" page. If name is not found in the database, serves a registration page,
+  where user's full name is asked and on submitting the full name, it stores the login name,
+  password and full name in the database (hint: use session for storing data, submitted login
+  name and password).
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register (Servlet)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 320px; margin: 60px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input[type=text], input[type=password] { width: 100%; padding: 6px; box-sizing: border-box; }
+    input[type=submit] { margin-top: 15px; width: 100%; padding: 8px; }
+    p.note { font-size: 13px; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Login</h2>
+    <form action="login" method="post">
+      <label for="username">Login name</label>
+      <input type="text" id="username" name="username" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+      <input type="submit" value="Login">
+    </form>
+    <p class="note">New user? Just enter the login name and password you want &ndash;
+      you will be asked for your full name to register.</p>
+  </div>
+</body>
+</html>

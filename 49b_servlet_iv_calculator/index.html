@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (b) iv) - Servlets
+  A simple calculator application that takes two numbers and an operator (+, -, *, /, %) from an
+  HTML page and returns the result page with the operation performed on the operands.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Calculator (Servlet)</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f2f4f8; }
+    .box { width: 320px; margin: 60px auto; padding: 20px; background: #fff;
+           border: 1px solid #ccc; border-radius: 6px; }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 10px; }
+    input, select { width: 100%; padding: 6px; box-sizing: border-box; }
+    input[type=submit] { margin-top: 15px; padding: 8px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>Simple Calculator</h2>
+    <form action="calculate" method="post">
+      <label for="num1">First number</label>
+      <input type="text" id="num1" name="num1" required>
+      <label for="op">Operator</label>
+      <select id="op" name="op">
+        <option value="+">+ (Add)</option>
+        <option value="-">- (Subtract)</option>
+        <option value="*">* (Multiply)</option>
+        <option value="/">/ (Divide)</option>
+        <option value="%">% (Modulus)</option>
+      </select>
+      <label for="num2">Second number</label>
+      <input type="text" id="num2" name="num2" required>
+      <input type="submit" value="Calculate">
+    </form>
+  </div>
+</body>
+</html>
