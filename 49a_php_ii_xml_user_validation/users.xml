@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Question 49 (a)(ii): Modify the above program (49 (a)(i) user validation) to use an
+  XML file instead of database.
+
+  users.xml - the "database" of valid users.
+-->
+<users>
+    <user>
+        <username>admin</username>
+        <password>admin123</password>
+        <fullname>Administrator</fullname>
+    </user>
+    <user>
+        <username>student</username>
+        <password>pass123</password>
+        <fullname>Ravi Kumar</fullname>
+    </user>
+    <user>
+        <username>anita</username>
+        <password>anita@1</password>
+        <fullname>Anita Sharma</fullname>
+    </user>
+</users>

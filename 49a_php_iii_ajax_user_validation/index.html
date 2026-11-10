@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+  Question 49 (a)(iii): Modify the above program (49 (a)(i): a user validation web application,
+  where the login name and password are checked against the data in the Database; on a match a
+  successful login message is returned, otherwise a failure message is shown) using AJAX to show
+  the result on the same page below the submit button.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login (AJAX)</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f2f5; }
+        .box { width: 320px; margin: 60px auto; padding: 20px 25px; background: #fff;
+               border: 1px solid #ccc; border-radius: 6px; }
+        h2 { text-align: center; margin-top: 0; }
+        label { display: block; margin-top: 10px; }
+        input[type=text], input[type=password] { width: 100%; padding: 6px; box-sizing: border-box; }
+        button { margin-top: 15px; width: 100%; padding: 8px; cursor: pointer; }
+        #result { margin-top: 15px; padding: 8px; text-align: center; font-weight: bold; }
+        #result.ok { color: green; border: 1px solid green; background: #eaffea; }
+        #result.fail { color: #c00; border: 1px solid #c00; background: #ffecec; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>User Login (AJAX)</h2>
+        <form id="loginForm">
+            <label for="username">Login Name</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <!-- The server's answer is shown here, below the submit button -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').onsubmit = function (event) {
+            event.preventDefault();               // do not reload the page
+
+            var resultDiv = document.getElementById('result');
+            var params = 'username=' + encodeURIComponent(document.getElementById('username').value)
+                       + '&password=' + encodeURIComponent(document.getElementById('password').value);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'login.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState !== 4) return;
+                if (xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    resultDiv.className = data.success ? 'ok' : 'fail';
+                    resultDiv.textContent = data.message;
+                } else {
+                    resultDiv.className = 'fail';
+                    resultDiv.textContent = 'Server error (' + xhr.status + ')';
+                }
+            };
+            resultDiv.className = '';
+            resultDiv.textContent = 'Checking...';
+            xhr.send(params);
+        };
+    </script>
+</body>
+</html>
