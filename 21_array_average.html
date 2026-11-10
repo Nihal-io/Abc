@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+  Question 21:
+  Write a function that accepts an array and returns the average of the
+  numbers in that array.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q21 - Average of array</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Average of numbers in an array</h1>
+    <p>Enter numbers separated by commas:
+        <input type="text" id="nums" value="10, 20, 30, 40, 55">
+        <button onclick="run()">Find Average</button></p>
+    <div id="output"></div>
+
+    <script>
+        // Returns the average of the numbers in arr (NaN for an empty array)
+        function average(arr) {
+            if (arr.length === 0) return NaN;
+            var sum = 0;
+            for (var i = 0; i < arr.length; i++) {
+                sum += arr[i];
+            }
+            return sum / arr.length;
+        }
+
+        function run() {
+            var parts = document.getElementById("nums").value.split(",");
+            var arr = [];
+            for (var i = 0; i < parts.length; i++) {
+                var v = parseFloat(parts[i]);
+                if (parts[i].trim() !== "" && !isNaN(v)) arr.push(v);
+            }
+            var out = document.getElementById("output");
+            if (arr.length === 0) {
+                out.innerHTML = "<p style='color:red'>Please enter at least one number.</p>";
+                return;
+            }
+            var avg = average(arr);
+            out.innerHTML =
+                "<p><b>Array:</b> [" + arr.join(", ") + "]</p>" +
+                "<p><b>Number of elements:</b> " + arr.length + "</p>" +
+                "<p><b>Average:</b> " + Number(avg.toFixed(2)) + "</p>";
+            console.log("Average of", arr, "=", avg);
+        }
+
+        run();
+    </script>
+</body>
+</html>

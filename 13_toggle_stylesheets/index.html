@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  Question 13:
+  Write a program that changes the background color of a webpage dynamically
+  using inline styles, and also includes a button to toggle between two
+  external stylesheets.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q13 - Dynamic Background &amp; Stylesheet Toggle</title>
+    <!-- The external stylesheet; its href is swapped by JavaScript -->
+    <link rel="stylesheet" id="themeSheet" href="style1.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Dynamic Styling Demo</h1>
+
+        <h2>1. Change background colour (inline style)</h2>
+        <p>Each button sets <code>document.body.style.backgroundColor</code>,
+           which writes an inline <code>style="..."</code> attribute on &lt;body&gt;.</p>
+        <button onclick="changeBg('lightyellow')">Light Yellow</button>
+        <button onclick="changeBg('lightgreen')">Light Green</button>
+        <button onclick="changeBg('lightblue')">Light Blue</button>
+        <button onclick="changeBg('pink')">Pink</button>
+        <button onclick="randomBg()">Random Colour</button>
+        <button onclick="resetBg()">Reset (remove inline style)</button>
+        <p>
+            Pick any colour:
+            <input type="color" id="picker" value="#ffffff" oninput="changeBg(this.value)">
+        </p>
+        <p>Current inline style on &lt;body&gt;: <strong id="inlineInfo">(none)</strong></p>
+
+        <h2>2. Toggle between two external stylesheets</h2>
+        <button id="toggleBtn" onclick="toggleStylesheet()">Switch to Style 2</button>
+        <p>Active stylesheet: <strong id="sheetInfo">style1.css</strong></p>
+
+        <div class="box">
+            This box is styled only by the external stylesheet. Toggle the stylesheet
+            to see its font, colours and border change.
+            <em>Note: an inline background colour overrides the stylesheet's background
+            (inline styles have higher priority) - press "Reset" to see the sheet's own background.</em>
+        </div>
+    </div>
+
+    <script>
+        function showInline() {
+            document.getElementById("inlineInfo").textContent =
+                document.body.getAttribute("style") || "(none)";
+        }
+
+        // Change the background colour using an inline style
+        function changeBg(color) {
+            document.body.style.backgroundColor = color;
+            showInline();
+        }
+
+        function randomBg() {
+            var r = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            changeBg("rgb(" + r + ", " + g + ", " + b + ")");
+        }
+
+        function resetBg() {
+            document.body.style.backgroundColor = "";
+            document.body.removeAttribute("style");
+            showInline();
+        }
+
+        // Toggle the href of the <link> element between the two CSS files
+        function toggleStylesheet() {
+            var link = document.getElementById("themeSheet");
+            var btn = document.getElementById("toggleBtn");
+            if (link.getAttribute("href") === "style1.css") {
+                link.setAttribute("href", "style2.css");
+                btn.textContent = "Switch to Style 1";
+            } else {
+                link.setAttribute("href", "style1.css");
+                btn.textContent = "Switch to Style 2";
+            }
+            document.getElementById("sheetInfo").textContent = link.getAttribute("href");
+        }
+    </script>
+</body>
+</html>

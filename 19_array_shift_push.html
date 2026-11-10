@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!--
+  Question 19:
+  Write a program that initializes an array of numbers, removes the first
+  element, adds a new element to the end, and logs the modified array.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q19 - Array shift and push</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Array: remove first element and add to the end</h1>
+    <p>Open the browser console (F12) to see the <code>console.log</code> output as well.</p>
+    <div id="output"></div>
+
+    <script>
+        var out = document.getElementById("output");
+
+        function show(label, value) {
+            out.innerHTML += "<p><b>" + label + ":</b> " + value + "</p>";
+        }
+
+        // 1. Initialize an array of numbers
+        var numbers = [10, 20, 30, 40, 50];
+        console.log("Original array:", numbers);
+        show("Original array", "[" + numbers.join(", ") + "]");
+
+        // 2. Remove the first element (shift returns the removed element)
+        var removed = numbers.shift();
+        console.log("Removed first element:", removed);
+        show("Removed first element using shift()", removed);
+        show("After shift()", "[" + numbers.join(", ") + "]");
+
+        // 3. Add a new element to the end
+        var newElement = 60;
+        numbers.push(newElement);
+        console.log("Added element at end:", newElement);
+        show("Added element using push()", newElement);
+
+        // 4. Log the modified array
+        console.log("Modified array:", numbers);
+        show("Modified array", "[" + numbers.join(", ") + "]");
+    </script>
+</body>
+</html>

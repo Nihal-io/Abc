@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+  Question 20:
+  Create a function that accepts an array by reference, modifies it by
+  doubling all its elements, and returns the modified array.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q20 - Double array elements</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Doubling array elements (array passed by reference)</h1>
+    <p>In JavaScript, arrays are objects, so the function receives a reference to the
+       <b>same</b> array. Changing it inside the function changes the original array.</p>
+    <p>Enter numbers separated by commas:
+        <input type="text" id="nums" value="1, 2, 3, 4, 5">
+        <button onclick="run()">Double</button></p>
+    <div id="output"></div>
+
+    <script>
+        // Modifies the passed array in place and returns it
+        function doubleArray(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                arr[i] = arr[i] * 2;
+            }
+            return arr;
+        }
+
+        function run() {
+            var text = document.getElementById("nums").value;
+            var parts = text.split(",");
+            var original = [];
+            for (var i = 0; i < parts.length; i++) {
+                var v = parseFloat(parts[i]);
+                if (parts[i].trim() !== "" && !isNaN(v)) original.push(v);
+            }
+            var out = document.getElementById("output");
+            if (original.length === 0) {
+                out.innerHTML = "<p style='color:red'>Please enter at least one number.</p>";
+                return;
+            }
+
+            var before = "[" + original.join(", ") + "]";
+            var result = doubleArray(original);
+
+            out.innerHTML =
+                "<p><b>Original array before call:</b> " + before + "</p>" +
+                "<p><b>Returned array:</b> [" + result.join(", ") + "]</p>" +
+                "<p><b>Original array after call:</b> [" + original.join(", ") + "]</p>" +
+                "<p><b>result === original ?</b> " + (result === original) +
+                " (same array object - it was passed by reference)</p>";
+            console.log("Before:", before, "After:", original, "Same object:", result === original);
+        }
+
+        run();
+    </script>
+</body>
+</html>

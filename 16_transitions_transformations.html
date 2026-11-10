@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<!--
+  Question 16:
+  Demonstrate TRANSITIONS and TRANSFORMATION.
+  (CSS transitions + 2D transforms: translate, rotate, scale, skew, matrix
+   and 3D transforms: rotateX, rotateY, a flip card, perspective.)
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q16 - Transitions and Transformations</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+            background: #f5f7fa;
+        }
+        h2 { color: #6a1b9a; margin-top: 35px; }
+        .row { display: flex; flex-wrap: wrap; gap: 40px; padding: 20px 10px; }
+        .item { text-align: center; font-size: 13px; }
+        .box {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px;
+            background: #42a5f5;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* ===================== 1. TRANSITIONS ===================== */
+        /* transition: property duration timing-function delay */
+        .t-width  { transition: width 1s ease; }
+        .t-width:hover  { width: 220px; }
+
+        .t-color  { transition: background-color 1.5s linear; }
+        .t-color:hover  { background-color: #e53935; }
+
+        .t-multi  { transition: width 1s, height 1s, border-radius 1s, background-color 1s; }
+        .t-multi:hover  { width: 150px; height: 150px; border-radius: 50%; background-color: #43a047; }
+
+        .t-delay  { transition: transform 1s ease-in-out 0.5s; }
+        .t-delay:hover  { transform: rotate(180deg); }
+
+        /* Timing functions compared on a track */
+        .track {
+            width: 420px;
+            background: #ddd;
+            margin: 6px 0;
+            border-radius: 4px;
+        }
+        .ball {
+            width: 90px;
+            padding: 6px 0;
+            text-align: center;
+            color: #fff;
+            background: #8e24aa;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: margin-left 2s;
+        }
+        .tracks:hover .ball { margin-left: 330px; }
+        .linear      { transition-timing-function: linear; }
+        .ease        { transition-timing-function: ease; }
+        .ease-in     { transition-timing-function: ease-in; }
+        .ease-out    { transition-timing-function: ease-out; }
+        .ease-in-out { transition-timing-function: ease-in-out; }
+
+        /* ===================== 2. 2D TRANSFORMS ===================== */
+        .tr-2d { transition: transform 0.8s; }
+        .translate:hover { transform: translate(50px, 20px); }
+        .rotate:hover    { transform: rotate(45deg); }
+        .scale:hover     { transform: scale(1.5); }
+        .skew:hover      { transform: skew(20deg, 10deg); }
+        .matrix:hover    { transform: matrix(1, 0.3, -0.3, 1, 20, 0); }
+        .combined:hover  { transform: translateX(40px) rotate(90deg) scale(0.7); }
+
+        /* Static (always applied) 2D transforms */
+        .static .box { background: #ff7043; cursor: default; }
+        .s-rotate    { transform: rotate(20deg); }
+        .s-skewx     { transform: skewX(25deg); }
+        .s-scale     { transform: scale(0.6, 1.2); }
+
+        /* ===================== 3. 3D TRANSFORMS ===================== */
+        .scene { perspective: 600px; }
+        .tr-3d { transition: transform 1s; background: #26a69a; }
+        .rotx:hover { transform: rotateX(180deg); }
+        .roty:hover { transform: rotateY(180deg); }
+        .rotz:hover { transform: rotateZ(180deg); }
+        .r3d:hover  { transform: rotate3d(1, 1, 0, 180deg); }
+        .tz:hover   { transform: translateZ(150px); }
+
+        /* Flip card */
+        .flip-card {
+            width: 200px;
+            height: 130px;
+            perspective: 800px;
+            margin: auto;
+        }
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-inner { transform: rotateY(180deg); }
+        .flip-front, .flip-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #fff;
+            font-weight: bold;
+        }
+        .flip-front { background: #3949ab; }
+        .flip-back  { background: #f4511e; transform: rotateY(180deg); }
+
+        /* Rotating 3D cube (keyframe animation + 3D transforms) */
+        .cube-scene { width: 100px; height: 100px; perspective: 500px; margin: 20px auto 40px; }
+        .cube {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 6s infinite linear;
+        }
+        .face {
+            position: absolute; width: 100px; height: 100px;
+            opacity: 0.85; color: #fff; font-weight: bold;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid #fff;
+        }
+        .f1 { background: #e53935; transform: rotateY(0deg)   translateZ(50px); }
+        .f2 { background: #43a047; transform: rotateY(90deg)  translateZ(50px); }
+        .f3 { background: #1e88e5; transform: rotateY(180deg) translateZ(50px); }
+        .f4 { background: #fdd835; transform: rotateY(-90deg) translateZ(50px); }
+        .f5 { background: #8e24aa; transform: rotateX(90deg)  translateZ(50px); }
+        .f6 { background: #00897b; transform: rotateX(-90deg) translateZ(50px); }
+        @keyframes spin {
+            from { transform: rotateX(0deg) rotateY(0deg); }
+            to   { transform: rotateX(360deg) rotateY(360deg); }
+        }
+
+        /* JS-driven transition */
+        #jsBox { transition: transform 0.6s ease, background-color 0.6s ease; }
+        button { padding: 6px 12px; margin: 3px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>CSS Transitions and Transformations</h1>
+    <p>Hover over each box to see the effect.</p>
+
+    <h2>1. Transitions</h2>
+    <div class="row">
+        <div class="item"><div class="box t-width">Width</div>transition: width 1s ease</div>
+        <div class="item"><div class="box t-color">Colour</div>transition: background-color 1.5s linear</div>
+        <div class="item"><div class="box t-multi">Multi</div>width, height, radius, colour</div>
+        <div class="item"><div class="box t-delay">Delay</div>transform 1s with 0.5s delay</div>
+    </div>
+    <p><b>Timing functions</b> (hover over the tracks):</p>
+    <div class="tracks">
+        <div class="track"><div class="ball linear">linear</div></div>
+        <div class="track"><div class="ball ease">ease</div></div>
+        <div class="track"><div class="ball ease-in">ease-in</div></div>
+        <div class="track"><div class="ball ease-out">ease-out</div></div>
+        <div class="track"><div class="ball ease-in-out">ease-in-out</div></div>
+    </div>
+
+    <h2>2. 2D Transformations (with transition)</h2>
+    <div class="row">
+        <div class="item"><div class="box tr-2d translate">translate</div>translate(50px, 20px)</div>
+        <div class="item"><div class="box tr-2d rotate">rotate</div>rotate(45deg)</div>
+        <div class="item"><div class="box tr-2d scale">scale</div>scale(1.5)</div>
+        <div class="item"><div class="box tr-2d skew">skew</div>skew(20deg, 10deg)</div>
+        <div class="item"><div class="box tr-2d matrix">matrix</div>matrix(1,0.3,-0.3,1,20,0)</div>
+        <div class="item"><div class="box tr-2d combined">combined</div>translateX + rotate + scale</div>
+    </div>
+    <p><b>Static 2D transforms</b> (always applied):</p>
+    <div class="row static">
+        <div class="item"><div class="box s-rotate">rotate</div>rotate(20deg)</div>
+        <div class="item"><div class="box s-skewx">skewX</div>skewX(25deg)</div>
+        <div class="item"><div class="box s-scale">scale</div>scale(0.6, 1.2)</div>
+    </div>
+
+    <h2>3. 3D Transformations</h2>
+    <div class="row scene">
+        <div class="item"><div class="box tr-3d rotx">rotateX</div>rotateX(180deg)</div>
+        <div class="item"><div class="box tr-3d roty">rotateY</div>rotateY(180deg)</div>
+        <div class="item"><div class="box tr-3d rotz">rotateZ</div>rotateZ(180deg)</div>
+        <div class="item"><div class="box tr-3d r3d">rotate3d</div>rotate3d(1,1,0,180deg)</div>
+        <div class="item"><div class="box tr-3d tz">translateZ</div>translateZ(150px)</div>
+    </div>
+
+    <div class="row">
+        <div class="item">
+            <div class="flip-card">
+                <div class="flip-inner">
+                    <div class="flip-front">FRONT<br><small>hover to flip</small></div>
+                    <div class="flip-back">BACK<br><small>rotateY(180deg)</small></div>
+                </div>
+            </div>
+            <p>Flip card (rotateY + backface-visibility)</p>
+        </div>
+        <div class="item">
+            <div class="cube-scene">
+                <div class="cube">
+                    <div class="face f1">1</div><div class="face f2">2</div>
+                    <div class="face f3">3</div><div class="face f4">4</div>
+                    <div class="face f5">5</div><div class="face f6">6</div>
+                </div>
+            </div>
+            <p>Rotating 3D cube (preserve-3d + animation)</p>
+        </div>
+    </div>
+
+    <h2>4. Transform applied from JavaScript (transition animates the change)</h2>
+    <div class="box" id="jsBox">JS</div>
+    <button onclick="setT('translateX(150px)')">Move</button>
+    <button onclick="setT('rotate(360deg)')">Rotate</button>
+    <button onclick="setT('scale(1.6)')">Grow</button>
+    <button onclick="setT('skewY(20deg)')">Skew</button>
+    <button onclick="setT('rotateY(180deg)')">Flip (3D)</button>
+    <button onclick="setT('none')">Reset</button>
+    <p>Current transform: <b id="cur">none</b></p>
+
+    <script>
+        function setT(value) {
+            var box = document.getElementById("jsBox");
+            box.style.transform = value;
+            box.style.backgroundColor = (value === "none") ? "" : "#ef6c00";
+            document.getElementById("cur").textContent = value;
+        }
+    </script>
+</body>
+</html>

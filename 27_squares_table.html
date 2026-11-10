@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!--
+  Question 27:
+  Develop and demonstrate a HTML file that includes Java script for the following
+  problems: Input: A number n obtained using prompt
+  Output: A table of numbers from 1 to n and their squares using alert
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q27 - Numbers and squares</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Table of numbers from 1 to n and their squares</h1>
+    <div id="output"></div>
+    <p><button onclick="location.reload()">Run again</button></p>
+
+    <script>
+        var out = document.getElementById("output");
+        var input = prompt("Enter a positive number n:", "10");
+        var n = parseInt(input, 10);
+
+        if (input === null) {
+            out.innerHTML = "<p>Input cancelled.</p>";
+        } else if (isNaN(n) || n <= 0) {
+            alert("Please enter a positive whole number.");
+            out.innerHTML = "<p style='color:red'>Invalid input.</p>";
+        } else {
+            var msg = "Number\tSquare\n";
+            var html = "<p>n = <b>" + n + "</b></p><table><tr><th>Number</th><th>Square</th></tr>";
+            for (var i = 1; i <= n; i++) {
+                msg += i + "\t\t" + (i * i) + "\n";
+                html += "<tr><td>" + i + "</td><td>" + (i * i) + "</td></tr>";
+            }
+            html += "</table>";
+            alert("Numbers from 1 to " + n + " and their squares:\n\n" + msg);
+            out.innerHTML = html;
+        }
+    </script>
+</body>
+</html>

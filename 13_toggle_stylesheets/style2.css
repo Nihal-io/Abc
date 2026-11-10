@@ -1,0 +1,46 @@
+/* Question 13 - External stylesheet 2 (dark "Night" theme) */
+body {
+    background-color: #1e1e2f;
+    color: #f0f0f0;
+    font-family: Verdana, Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    transition: background-color 0.4s;
+}
+.container {
+    max-width: 800px;
+    margin: auto;
+}
+h1 {
+    color: #ffcc00;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 3px dashed #ffcc00;
+    padding-bottom: 6px;
+}
+h2 {
+    color: #ff9933;
+}
+code {
+    color: #8fd3ff;
+}
+button {
+    background-color: #ffcc00;
+    color: #1e1e2f;
+    border: 2px solid #ff9933;
+    padding: 8px 14px;
+    margin: 4px 2px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #ff9933;
+}
+.box {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #2d2d44;
+    border: 2px dashed #ffcc00;
+    border-radius: 12px;
+}

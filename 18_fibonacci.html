@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--
+  Question 18:
+  Develop and demonstrate a HTML file that includes Java script for the following
+  problems: Input: A number n obtained using prompt
+  Output: The first n Fibonacci numbers
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q18 - Fibonacci Numbers</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>First n Fibonacci Numbers</h1>
+    <div id="output"></div>
+    <p><button onclick="location.reload()">Run again</button></p>
+
+    <script>
+        var out = document.getElementById("output");
+        var input = prompt("Enter the value of n (how many Fibonacci numbers):", "10");
+        var n = parseInt(input, 10);
+
+        if (input === null) {
+            out.innerHTML = "<p>Input cancelled.</p>";
+        } else if (isNaN(n) || n <= 0 || String(n) !== input.trim()) {
+            alert("Please enter a positive whole number.");
+            out.innerHTML = "<p style='color:red'>Invalid input: '" + input.replace(/</g, "&lt;") + "'</p>";
+        } else {
+            var fib = [];
+            var a = 0, b = 1, temp;
+            for (var i = 0; i < n; i++) {
+                fib.push(a);
+                temp = a + b;
+                a = b;
+                b = temp;
+            }
+            out.innerHTML = "<p>n = <b>" + n + "</b></p>" +
+                            "<p>The first " + n + " Fibonacci numbers are:</p>" +
+                            "<p><b>" + fib.join(", ") + "</b></p>";
+            alert("The first " + n + " Fibonacci numbers:\n" + fib.join(", "));
+            console.log("Fibonacci(" + n + "):", fib);
+        }
+    </script>
+</body>
+</html>

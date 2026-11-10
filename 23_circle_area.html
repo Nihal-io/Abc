@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+  Question 23:
+  Create a function that calculates the area of a circle given its radius
+  using the Math object.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q23 - Area of a circle</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Area of a circle using the Math object</h1>
+    <p>Area = &pi; &times; r<sup>2</sup> &nbsp; (uses <code>Math.PI</code> and <code>Math.pow</code>)</p>
+    <p>Radius: <input type="number" id="radius" value="7" min="0" step="any">
+       <button onclick="run()">Calculate</button></p>
+    <div id="output"></div>
+
+    <script>
+        // Returns the area of a circle of radius r
+        function circleArea(r) {
+            return Math.PI * Math.pow(r, 2);
+        }
+
+        function run() {
+            var r = parseFloat(document.getElementById("radius").value);
+            var out = document.getElementById("output");
+            if (isNaN(r) || r < 0) {
+                out.innerHTML = "<p style='color:red'>Please enter a non-negative radius.</p>";
+                return;
+            }
+            var area = circleArea(r);
+            out.innerHTML =
+                "<p><b>Radius:</b> " + r + "</p>" +
+                "<p><b>Math.PI:</b> " + Math.PI + "</p>" +
+                "<p><b>Area:</b> " + area + "</p>" +
+                "<p><b>Area (rounded to 2 decimals):</b> " + (Math.round(area * 100) / 100) + "</p>";
+            console.log("Area of circle with radius " + r + " = " + area);
+        }
+
+        run();
+    </script>
+</body>
+</html>

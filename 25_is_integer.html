@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!--
+  Question 25:
+  Write a function that checks if a number is an integer and returns a
+  Boolean value indicating whether it is true or false.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q25 - Integer check</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Check whether a number is an integer</h1>
+    <p>Number: <input type="text" id="num" value="42">
+       <button onclick="run()">Check</button></p>
+    <div id="output"></div>
+    <h3>Test cases</h3>
+    <div id="tests"></div>
+
+    <script>
+        // Returns true if n is an integer, otherwise false
+        function isInteger(n) {
+            return typeof n === "number" && isFinite(n) && Math.floor(n) === n;
+            // (Same as the built-in Number.isInteger(n))
+        }
+
+        function run() {
+            var text = document.getElementById("num").value.trim();
+            var n = (text === "") ? NaN : Number(text);
+            var result = isInteger(n);
+            document.getElementById("output").innerHTML =
+                "<p>isInteger(" + text.replace(/</g, "&lt;") + ") = <b>" + result + "</b></p>" +
+                "<p>" + (result ? "It IS an integer." : "It is NOT an integer.") + "</p>";
+            console.log("isInteger(" + text + ") =", result);
+        }
+
+        // A few fixed test values
+        var values = [5, -12, 0, 3.14, 7.0, -0.5, NaN, Infinity, "10"];
+        var html = "<table><tr><th>Value</th><th>typeof</th><th>isInteger()</th><th>Number.isInteger()</th></tr>";
+        for (var i = 0; i < values.length; i++) {
+            var v = values[i];
+            var shown = (typeof v === "string") ? '"' + v + '"' : String(v);
+            html += "<tr><td>" + shown + "</td><td>" + typeof v + "</td><td>" + isInteger(v) +
+                    "</td><td>" + Number.isInteger(v) + "</td></tr>";
+        }
+        html += "</table>";
+        document.getElementById("tests").innerHTML = html;
+
+        run();
+    </script>
+</body>
+</html>

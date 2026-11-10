@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+  Question 24:
+  Write a program that uses the String object to reverse a given string.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q24 - Reverse a string</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Reverse a string using the String object</h1>
+    <p>String: <input type="text" id="str" value="Web Technologies">
+       <button onclick="run()">Reverse</button></p>
+    <div id="output"></div>
+
+    <script>
+        // Method 1: using String methods charAt() and length in a loop
+        function reverseString(s) {
+            var str = new String(s);       // String object
+            var rev = "";
+            for (var i = str.length - 1; i >= 0; i--) {
+                rev += str.charAt(i);
+            }
+            return rev;
+        }
+
+        // Method 2: using split(), reverse() and join()
+        function reverseBuiltIn(s) {
+            return String(s).split("").reverse().join("");
+        }
+
+        function run() {
+            var s = document.getElementById("str").value;
+            var r1 = reverseString(s);
+            var r2 = reverseBuiltIn(s);
+            var esc = function (t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+            document.getElementById("output").innerHTML =
+                "<p><b>Original string:</b> " + esc(s) + "</p>" +
+                "<p><b>Reversed (charAt loop):</b> " + esc(r1) + "</p>" +
+                "<p><b>Reversed (split/reverse/join):</b> " + esc(r2) + "</p>" +
+                "<p><b>Palindrome?</b> " + (s.toLowerCase() === r1.toLowerCase() ? "Yes" : "No") + "</p>";
+            console.log("Original: " + s + " | Reversed: " + r1);
+        }
+
+        run();
+    </script>
+</body>
+</html>

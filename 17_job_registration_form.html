@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<!--
+  Question 17:
+  Create a student Registration form for Job Application and validate the
+  form fields using JavaScript.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q17 - Job Application Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-box {
+            max-width: 650px;
+            margin: auto;
+            background: #fff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
+        }
+        h1 { text-align: center; color: #1a237e; margin-top: 0; }
+        fieldset { border: 1px solid #c5cae9; border-radius: 6px; margin-bottom: 15px; }
+        legend { color: #1a237e; font-weight: bold; }
+        .field { margin: 10px 0; }
+        .field label.lbl { display: block; font-weight: bold; margin-bottom: 4px; }
+        input[type=text], input[type=email], input[type=tel], input[type=date],
+        input[type=password], input[type=number], select, textarea {
+            width: 100%;
+            padding: 7px;
+            box-sizing: border-box;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+        }
+        .error { color: #c62828; font-size: 12px; display: block; min-height: 14px; }
+        .invalid { border-color: #c62828 !important; background: #fff5f5; }
+        .valid   { border-color: #2e7d32 !important; }
+        .buttons { text-align: center; }
+        button {
+            padding: 9px 22px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .submit { background: #1a237e; }
+        .reset  { background: #757575; }
+        #result {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            border: 2px solid #2e7d32;
+            background: #e8f5e9;
+            border-radius: 6px;
+        }
+        #result table { border-collapse: collapse; width: 100%; }
+        #result td { border: 1px solid #a5d6a7; padding: 5px; }
+    </style>
+</head>
+<body>
+<div class="form-box">
+    <h1>Job Application - Student Registration</h1>
+
+    <form id="regForm" onsubmit="return validateForm()" onreset="clearAll()" novalidate>
+        <fieldset>
+            <legend>Personal Details</legend>
+            <div class="field">
+                <label class="lbl" for="fullname">Full Name *</label>
+                <input type="text" id="fullname" placeholder="e.g. Ravi Kumar">
+                <span class="error" id="fullnameErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="dob">Date of Birth * (age 18 - 35)</label>
+                <input type="date" id="dob">
+                <span class="error" id="dobErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl">Gender *</label>
+                <label><input type="radio" name="gender" value="Male"> Male</label>
+                <label><input type="radio" name="gender" value="Female"> Female</label>
+                <label><input type="radio" name="gender" value="Other"> Other</label>
+                <span class="error" id="genderErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="email">Email *</label>
+                <input type="email" id="email" placeholder="name@example.com">
+                <span class="error" id="emailErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="phone">Mobile Number * (10 digits)</label>
+                <input type="tel" id="phone" placeholder="9876543210" maxlength="10">
+                <span class="error" id="phoneErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="address">Address *</label>
+                <textarea id="address" rows="2"></textarea>
+                <span class="error" id="addressErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="pincode">PIN Code * (6 digits)</label>
+                <input type="text" id="pincode" maxlength="6">
+                <span class="error" id="pincodeErr"></span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Academic Details</legend>
+            <div class="field">
+                <label class="lbl" for="qualification">Highest Qualification *</label>
+                <select id="qualification">
+                    <option value="">-- Select --</option>
+                    <option>BCA</option>
+                    <option>B.Sc</option>
+                    <option>B.E / B.Tech</option>
+                    <option>MCA</option>
+                    <option>M.Sc</option>
+                    <option>M.Tech</option>
+                </select>
+                <span class="error" id="qualificationErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="percentage">Aggregate Percentage * (minimum 60)</label>
+                <input type="number" id="percentage" step="0.01" min="0" max="100">
+                <span class="error" id="percentageErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="year">Year of Passing * (2015 - 2027)</label>
+                <input type="number" id="year">
+                <span class="error" id="yearErr"></span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Job Details</legend>
+            <div class="field">
+                <label class="lbl" for="position">Position Applied For *</label>
+                <select id="position">
+                    <option value="">-- Select --</option>
+                    <option>Software Developer</option>
+                    <option>Web Developer</option>
+                    <option>Test Engineer</option>
+                    <option>Data Analyst</option>
+                    <option>System Administrator</option>
+                </select>
+                <span class="error" id="positionErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl">Skills * (select at least 2)</label>
+                <label><input type="checkbox" name="skills" value="HTML/CSS"> HTML/CSS</label>
+                <label><input type="checkbox" name="skills" value="JavaScript"> JavaScript</label>
+                <label><input type="checkbox" name="skills" value="Java"> Java</label>
+                <label><input type="checkbox" name="skills" value="Python"> Python</label>
+                <label><input type="checkbox" name="skills" value="SQL"> SQL</label>
+                <label><input type="checkbox" name="skills" value="PHP"> PHP</label>
+                <span class="error" id="skillsErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="resume">Upload Resume * (.pdf, .doc, .docx)</label>
+                <input type="file" id="resume">
+                <span class="error" id="resumeErr"></span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Account</legend>
+            <div class="field">
+                <label class="lbl" for="password">Password * (min 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special)</label>
+                <input type="password" id="password">
+                <span class="error" id="passwordErr"></span>
+            </div>
+            <div class="field">
+                <label class="lbl" for="cpassword">Confirm Password *</label>
+                <input type="password" id="cpassword">
+                <span class="error" id="cpasswordErr"></span>
+            </div>
+            <div class="field">
+                <label><input type="checkbox" id="agree"> I declare that the above information is true. *</label>
+                <span class="error" id="agreeErr"></span>
+            </div>
+        </fieldset>
+
+        <div class="buttons">
+            <button type="submit" class="submit">Register</button>
+            <button type="reset" class="reset">Reset</button>
+        </div>
+    </form>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function val(id) {
+        return document.getElementById(id).value.trim();
+    }
+
+    // Show / clear an error message for a field
+    function setError(id, msg) {
+        document.getElementById(id + "Err").textContent = msg;
+        var el = document.getElementById(id);
+        if (el && el.type !== "radio" && el.type !== "checkbox") {
+            el.classList.toggle("invalid", msg !== "");
+            el.classList.toggle("valid", msg === "");
+        }
+        return msg === "";
+    }
+
+    function validateForm() {
+        var ok = true;
+
+        // Full name: letters and spaces only, at least 3 characters
+        var name = val("fullname");
+        if (name === "") ok = setError("fullname", "Name is required.") && ok;
+        else if (!/^[A-Za-z][A-Za-z .]{2,49}$/.test(name))
+            ok = setError("fullname", "Name must have only letters/spaces (3-50 chars).") && ok;
+        else setError("fullname", "");
+
+        // Date of birth: age between 18 and 35
+        var dob = val("dob");
+        if (dob === "") ok = setError("dob", "Date of birth is required.") && ok;
+        else {
+            var d = new Date(dob), today = new Date();
+            var age = today.getFullYear() - d.getFullYear();
+            var m = today.getMonth() - d.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+            if (age < 18 || age > 35) ok = setError("dob", "Age must be between 18 and 35 (yours: " + age + ").") && ok;
+            else setError("dob", "");
+        }
+
+        // Gender: one radio button must be checked
+        if (!document.querySelector("input[name=gender]:checked"))
+            ok = setError("gender", "Please select your gender.") && ok;
+        else setError("gender", "");
+
+        // Email
+        var email = val("email");
+        if (email === "") ok = setError("email", "Email is required.") && ok;
+        else if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(email))
+            ok = setError("email", "Enter a valid email address.") && ok;
+        else setError("email", "");
+
+        // Mobile number: 10 digits starting with 6-9
+        var phone = val("phone");
+        if (!/^[6-9][0-9]{9}$/.test(phone))
+            ok = setError("phone", "Enter a valid 10-digit mobile number (starts with 6-9).") && ok;
+        else setError("phone", "");
+
+        // Address
+        if (val("address").length < 10)
+            ok = setError("address", "Address must be at least 10 characters.") && ok;
+        else setError("address", "");
+
+        // PIN code
+        if (!/^[1-9][0-9]{5}$/.test(val("pincode")))
+            ok = setError("pincode", "PIN code must be 6 digits.") && ok;
+        else setError("pincode", "");
+
+        // Qualification
+        if (val("qualification") === "")
+            ok = setError("qualification", "Please select your qualification.") && ok;
+        else setError("qualification", "");
+
+        // Percentage
+        var pct = parseFloat(val("percentage"));
+        if (isNaN(pct) || pct < 0 || pct > 100)
+            ok = setError("percentage", "Enter a percentage between 0 and 100.") && ok;
+        else if (pct < 60)
+            ok = setError("percentage", "Minimum 60% aggregate is required.") && ok;
+        else setError("percentage", "");
+
+        // Year of passing
+        var yr = parseInt(val("year"), 10);
+        if (isNaN(yr) || yr < 2015 || yr > 2027)
+            ok = setError("year", "Year of passing must be between 2015 and 2027.") && ok;
+        else setError("year", "");
+
+        // Position
+        if (val("position") === "")
+            ok = setError("position", "Please select a position.") && ok;
+        else setError("position", "");
+
+        // Skills: at least 2 checkboxes
+        var skills = document.querySelectorAll("input[name=skills]:checked");
+        if (skills.length < 2) ok = setError("skills", "Select at least 2 skills.") && ok;
+        else setError("skills", "");
+
+        // Resume: required, allowed extensions
+        var file = val("resume");
+        if (file === "") ok = setError("resume", "Please upload your resume.") && ok;
+        else if (!/\.(pdf|doc|docx)$/i.test(file))
+            ok = setError("resume", "Only .pdf, .doc or .docx files are allowed.") && ok;
+        else setError("resume", "");
+
+        // Password strength
+        var pw = document.getElementById("password").value;
+        if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{8,}$/.test(pw))
+            ok = setError("password", "Password must be 8+ chars with uppercase, lowercase, digit and special character.") && ok;
+        else setError("password", "");
+
+        // Confirm password
+        var cpw = document.getElementById("cpassword").value;
+        if (cpw === "" || cpw !== pw) ok = setError("cpassword", "Passwords do not match.") && ok;
+        else setError("cpassword", "");
+
+        // Declaration
+        if (!document.getElementById("agree").checked)
+            ok = setError("agree", "You must accept the declaration.") && ok;
+        else setError("agree", "");
+
+        if (!ok) {
+            alert("Please correct the highlighted errors.");
+            document.getElementById("result").style.display = "none";
+            return false;
+        }
+
+        // All valid: show the submitted details (no server, so stop real submission)
+        var skillList = [];
+        for (var i = 0; i < skills.length; i++) skillList.push(skills[i].value);
+        var rows = [
+            ["Name", name], ["Date of Birth", dob],
+            ["Gender", document.querySelector("input[name=gender]:checked").value],
+            ["Email", email], ["Mobile", phone], ["Address", val("address")],
+            ["PIN Code", val("pincode")], ["Qualification", val("qualification")],
+            ["Percentage", pct + "%"], ["Year of Passing", yr],
+            ["Position", val("position")], ["Skills", skillList.join(", ")],
+            ["Resume", file.split(/[\\/]/).pop()]
+        ];
+        var html = "<h3>Registration Successful!</h3><table>";
+        for (var j = 0; j < rows.length; j++) {
+            html += "<tr><td><b>" + rows[j][0] + "</b></td><td>" + escapeHtml(String(rows[j][1])) + "</td></tr>";
+        }
+        html += "</table>";
+        var res = document.getElementById("result");
+        res.innerHTML = html;
+        res.style.display = "block";
+        alert("Registration successful! Thank you, " + name + ".");
+        return false;
+    }
+
+    function escapeHtml(s) {
+        return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // Clear messages when the form is reset
+    function clearAll() {
+        var errs = document.querySelectorAll(".error");
+        for (var i = 0; i < errs.length; i++) errs[i].textContent = "";
+        var els = document.querySelectorAll(".invalid, .valid");
+        for (var k = 0; k < els.length; k++) els[k].classList.remove("invalid", "valid");
+        document.getElementById("result").style.display = "none";
+    }
+</script>
+</body>
+</html>

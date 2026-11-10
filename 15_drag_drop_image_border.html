@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+  Question 15:
+  Drag the W3Schools image into the rectangle and repeating an Image Border.
+
+  Part 1: HTML5 Drag and Drop - drag the W3Schools logo into the rectangle (and back).
+  Part 2: CSS border-image using the W3Schools border.png with "repeat"
+          ("round" and "stretch" shown for comparison).
+  (Needs an internet connection: the two images are loaded from w3schools.com.)
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q15 - Drag &amp; Drop and Image Border</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+        }
+        h2 { color: #04AA6D; }
+
+        /* The rectangle (drop target) - also uses a repeating image border */
+        .rect {
+            width: 350px;
+            height: 120px;
+            padding: 10px;
+            border: 15px solid transparent;
+            border-image: url("https://www.w3schools.com/css/border.png") 30 repeat;
+            float: left;
+            margin-right: 20px;
+        }
+        .source {
+            width: 350px;
+            height: 120px;
+            padding: 10px;
+            border: 2px dashed #aaa;
+            float: left;
+        }
+        .clear { clear: both; }
+        .over { background-color: #e6ffe6; }   /* highlight while dragging over */
+
+        /* Image border examples */
+        .bdr {
+            border: 10px solid transparent;
+            padding: 15px;
+            margin: 15px 0;
+            width: 400px;
+        }
+        #repeat  { border-image: url("https://www.w3schools.com/css/border.png") 30 repeat; }
+        #round   { border-image: url("https://www.w3schools.com/css/border.png") 30 round; }
+        #stretch { border-image: url("https://www.w3schools.com/css/border.png") 30 stretch; }
+    </style>
+</head>
+<body>
+    <h1>Drag and Drop + Repeating Image Border</h1>
+
+    <h2>1. Drag the W3Schools image into the rectangle</h2>
+    <p>Drag the logo from the dashed box on the right into the rectangle (it can be dragged back too).</p>
+    <p id="status">Status: image is outside the rectangle.</p>
+
+    <div id="div1" class="rect" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="leave(event)"></div>
+
+    <div id="div2" class="source" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="leave(event)">
+        <img src="https://www.w3schools.com/html/img_logo.gif" id="drag1"
+             draggable="true" ondragstart="drag(event)" width="336" height="69" alt="W3Schools logo">
+    </div>
+    <div class="clear"></div>
+
+    <h2>2. Image Border (border-image)</h2>
+    <p id="repeat" class="bdr"><b>border-image: ... 30 repeat;</b><br>
+        The middle part of each edge of the image is <b>repeated</b> (tiled) to fill the border.</p>
+    <p id="round" class="bdr"><b>border-image: ... 30 round;</b><br>
+        The image is repeated and scaled so a whole number of tiles fits.</p>
+    <p id="stretch" class="bdr"><b>border-image: ... 30 stretch;</b><br>
+        The middle part of each edge is <b>stretched</b> to fill the border.</p>
+    <p>Original image used for the border:</p>
+    <img src="https://www.w3schools.com/css/border.png" alt="border image">
+
+    <script>
+        // Allow dropping (default is to not allow it)
+        function allowDrop(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.add("over");
+        }
+
+        function leave(ev) {
+            ev.currentTarget.classList.remove("over");
+        }
+
+        // Store the id of the dragged element
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        // Move the dragged element into the drop target
+        function drop(ev) {
+            ev.preventDefault();
+            var target = ev.currentTarget;
+            target.classList.remove("over");
+            var id = ev.dataTransfer.getData("text");
+            var el = document.getElementById(id);
+            if (el) {
+                target.appendChild(el);
+                document.getElementById("status").textContent = (target.id === "div1")
+                    ? "Status: image dropped INSIDE the rectangle."
+                    : "Status: image is outside the rectangle.";
+            }
+        }
+    </script>
+</body>
+</html>

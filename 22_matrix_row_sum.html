@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+  Question 22:
+  Write a program that uses a 2D array to store a matrix and calculates the
+  sum of each row (and also the sum of each column).
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q22 - Matrix row and column sums</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Matrix (2D array): row sums and column sums</h1>
+    <div id="output"></div>
+
+    <script>
+        // 2D array storing a 3 x 4 matrix
+        var matrix = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12]
+        ];
+
+        // Sum of each row
+        function rowSums(m) {
+            var sums = [];
+            for (var i = 0; i < m.length; i++) {
+                var s = 0;
+                for (var j = 0; j < m[i].length; j++) {
+                    s += m[i][j];
+                }
+                sums.push(s);
+            }
+            return sums;
+        }
+
+        // Sum of each column
+        function colSums(m) {
+            var sums = [];
+            for (var j = 0; j < m[0].length; j++) {
+                var s = 0;
+                for (var i = 0; i < m.length; i++) {
+                    s += m[i][j];
+                }
+                sums.push(s);
+            }
+            return sums;
+        }
+
+        var rs = rowSums(matrix);
+        var cs = colSums(matrix);
+        var total = 0;
+        for (var k = 0; k < rs.length; k++) total += rs[k];
+
+        // Display the matrix with row sums (last column) and column sums (last row)
+        var html = "<table><tr><th></th>";
+        for (var j = 0; j < matrix[0].length; j++) html += "<th>Col " + (j + 1) + "</th>";
+        html += "<th>Row Sum</th></tr>";
+        for (var i = 0; i < matrix.length; i++) {
+            html += "<tr><th>Row " + (i + 1) + "</th>";
+            for (var c = 0; c < matrix[i].length; c++) html += "<td>" + matrix[i][c] + "</td>";
+            html += "<td><b>" + rs[i] + "</b></td></tr>";
+        }
+        html += "<tr><th>Col Sum</th>";
+        for (var c2 = 0; c2 < cs.length; c2++) html += "<td><b>" + cs[c2] + "</b></td>";
+        html += "<td><b>" + total + "</b></td></tr></table>";
+
+        html += "<p>Row sums: [" + rs.join(", ") + "]</p>";
+        html += "<p>Column sums: [" + cs.join(", ") + "]</p>";
+        html += "<p>Total of all elements: " + total + "</p>";
+        document.getElementById("output").innerHTML = html;
+
+        console.log("Matrix:", matrix);
+        for (var r = 0; r < rs.length; r++) console.log("Sum of row " + (r + 1) + " = " + rs[r]);
+        for (var q = 0; q < cs.length; q++) console.log("Sum of column " + (q + 1) + " = " + cs[q]);
+    </script>
+</body>
+</html>

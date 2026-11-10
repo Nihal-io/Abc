@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<!--
+  Question 26:
+  Develop and demonstrate JavaScript with POP-UP boxes and functions for the
+  following problem: Input: A number n obtained using prompt
+  Output: A multiplication table of numbers from 1 to 10 of n using alert
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Q26 - Multiplication table</title>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; margin: 30px; background: #f9f9f9; }
+        h1 { color: #2c3e50; }
+        #output { background: #fff; border: 1px solid #ccc; padding: 15px; border-radius: 6px; max-width: 700px; }
+        table { border-collapse: collapse; }
+        th, td { border: 1px solid #888; padding: 6px 14px; text-align: center; }
+        th { background: #2c3e50; color: #fff; }
+        button { padding: 6px 14px; cursor: pointer; }
+        code { background: #eee; padding: 1px 4px; }
+    </style>
+</head>
+<body>
+    <h1>Multiplication table using POP-UP boxes</h1>
+    <p>Uses <code>prompt()</code> to read n, <code>alert()</code> to show the table and
+       <code>confirm()</code> to ask whether to repeat.</p>
+    <p><button onclick="start()">Generate table</button></p>
+    <div id="output"></div>
+
+    <script>
+        // Read n using a prompt box; returns the number or null
+        function readNumber() {
+            var input = prompt("Enter a number n:", "5");
+            if (input === null) return null;          // user pressed Cancel
+            var n = Number(input);
+            if (input.trim() === "" || isNaN(n)) {
+                alert("Invalid input! Please enter a number.");
+                return readNumber();
+            }
+            return n;
+        }
+
+        // Build the multiplication table of n from 1 to 10
+        function multiplicationTable(n) {
+            var lines = [];
+            for (var i = 1; i <= 10; i++) {
+                lines.push(n + " x " + i + " = " + (n * i));
+            }
+            return lines;
+        }
+
+        function start() {
+            var n = readNumber();
+            if (n === null) {
+                alert("Cancelled.");
+                return;
+            }
+            var lines = multiplicationTable(n);
+            alert("Multiplication table of " + n + "\n\n" + lines.join("\n"));
+
+            // Also print the table on the page
+            var html = "<h3>Multiplication table of " + n + "</h3><table>";
+            for (var i = 0; i < lines.length; i++) html += "<tr><td>" + lines[i] + "</td></tr>";
+            document.getElementById("output").innerHTML = html + "</table>";
+
+            if (confirm("Do you want to generate another table?")) start();
+        }
+
+        start();
+    </script>
+</body>
+</html>
